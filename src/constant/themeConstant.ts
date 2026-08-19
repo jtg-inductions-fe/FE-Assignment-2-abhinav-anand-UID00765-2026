@@ -3,9 +3,16 @@
  * @constant
  */
 export const COLORS = {
-    PRIMARY: {
-        MAIN: '#0E9F6E',
-    },
+    primaryMain: '#58a6ff',
+    primaryLight: '#79b8ff',
+    primaryDark: '#2188ff',
+    secondaryMain: '#238636',
+    secondaryLight: '#2ea043',
+    secondaryDark: '#196c2e',
+    bgDefault: '#0d1117',
+    bgPaper: '#161b22',
+    textPrimary: '#c9d1d9',
+    textSecondary: '#8b949e',
 };
 
 /**

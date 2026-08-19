@@ -4,8 +4,23 @@ import { COLORS } from '@constant';
 
 /* Custom Palette */
 export const palette: PaletteOptions = {
-    // TODO: Add necessary colors here
+    mode: 'dark',
     primary: {
-        main: COLORS.PRIMARY.MAIN,
+        main: COLORS.primaryMain,
+        light: COLORS.primaryLight,
+        dark: COLORS.primaryDark,
+    },
+    secondary: {
+        main: COLORS.secondaryMain,
+        light: COLORS.secondaryLight,
+        dark: COLORS.secondaryDark,
+    },
+    background: {
+        default: COLORS.bgDefault,
+        paper: COLORS.bgPaper,
+    },
+    text: {
+        primary: COLORS.textPrimary,
+        secondary: COLORS.textSecondary,
     },
 };
