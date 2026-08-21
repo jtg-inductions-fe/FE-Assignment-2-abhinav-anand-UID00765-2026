@@ -2,5 +2,6 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "always",
         "editor.formatOnSave": "always"
-    }
+    },
+    "js/ts.tsdk.path": "node_modules/typescript/lib"
 }
