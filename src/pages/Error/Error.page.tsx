@@ -1,7 +1,12 @@
-import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import {
+    isRouteErrorResponse,
+    useNavigate,
+    useRouteError,
+} from 'react-router-dom';
 
 import { Box, Button, Typography } from '@mui/material';
+
+import { errorPageStyles } from './Error.styles';
 
 export const ErrorPage = () => {
     const error = useRouteError();
@@ -17,27 +22,21 @@ export const ErrorPage = () => {
     }
 
     return (
-        <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            flexGrow={1}
-            textAlign="center"
-        >
+        <Box sx={errorPageStyles.container}>
             <Typography variant="h2" color="error" gutterBottom>
                 Something went wrong!
             </Typography>
+
             <Typography variant="body1" color="textSecondary">
                 {errorMessage}
             </Typography>
+
             <Button
                 variant="contained"
-                color="primary"
                 onClick={() => {
                     void navigate('/');
                 }}
-                sx={{ mt: 3 }}
+                sx={errorPageStyles.button}
             >
                 Go Back Home
             </Button>

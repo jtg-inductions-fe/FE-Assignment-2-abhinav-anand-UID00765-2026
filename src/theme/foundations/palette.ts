@@ -1,26 +1,26 @@
 import type { PaletteOptions } from '@mui/material/styles';
 
-import { COLORS } from '@constant';
+import { COLORS } from '../constants';
 
 /* Custom Palette */
 export const palette: PaletteOptions = {
     mode: 'dark',
     primary: {
-        main: COLORS.primaryMain,
-        light: COLORS.primaryLight,
-        dark: COLORS.primaryDark,
+        main: COLORS.PRIMARY.MAIN,
+        light: COLORS.PRIMARY.LIGHT,
+        dark: COLORS.PRIMARY.DARK,
     },
     secondary: {
-        main: COLORS.secondaryMain,
-        light: COLORS.secondaryLight,
-        dark: COLORS.secondaryDark,
+        main: COLORS.SECONDARY.MAIN,
+        light: COLORS.SECONDARY.LIGHT,
+        dark: COLORS.SECONDARY.DARK,
     },
     background: {
-        default: COLORS.bgDefault,
-        paper: COLORS.bgPaper,
+        default: COLORS.BG.DEFAULT,
+        paper: COLORS.BG.PAPER,
     },
     text: {
-        primary: COLORS.textPrimary,
-        secondary: COLORS.textSecondary,
+        primary: COLORS.TEXT.PRIMARY,
+        secondary: COLORS.TEXT.SECONDARY,
     },
 };
