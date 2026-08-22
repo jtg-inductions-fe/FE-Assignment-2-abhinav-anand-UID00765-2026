@@ -10,4 +10,10 @@ export const searchBarStyles = {
     submitButton: {
         px: 4,
     } as SxProps<Theme>,
+
+    optionAvatar: {
+        width: 28,
+        height: 28,
+        mr: 2,
+    },
 };

@@ -1,4 +1,13 @@
-import { Autocomplete, Box, Button, TextField } from '@mui/material';
+import {
+    Autocomplete,
+    Avatar,
+    Box,
+    Button,
+    TextField,
+    Typography,
+} from '@mui/material';
+
+import { GitHubUserListItem } from '@services';
 
 import { searchBarStyles } from './SearchBar.styles';
 import type { SearchBarProps } from './SearchBar.types';
@@ -30,14 +39,29 @@ export const SearchBar = ({
                 options={suggestions}
                 loading={isSearching}
                 inputValue={initialValue}
-                onInputChange={(_, newInputValue) => {
-                    if (onInputChange) {
-                        onInputChange(newInputValue);
-                    }
-                }}
+                getOptionLabel={(user) =>
+                    typeof user == 'string' ? user : user.login
+                }
+                renderOption={(props, user: GitHubUserListItem) => (
+                    <Box component="li" {...props} key={user.login}>
+                        <Avatar
+                            src={user.avatar_url}
+                            alt={user.login}
+                            sx={searchBarStyles.optionAvatar}
+                        />
+                        <Typography variant="body1">{user.login}</Typography>
+                    </Box>
+                )}
+                onInputChange={(_, newInputValue) =>
+                    onInputChange(newInputValue)
+                }
                 onChange={(_, newValue) => {
                     if (newValue) {
-                        onSearch(newValue);
+                        onSearch(
+                            typeof newValue === 'string'
+                                ? newValue
+                                : newValue.login,
+                        );
                     }
                 }}
                 renderInput={(params) => (

@@ -53,9 +53,7 @@ export const GithubProfileContainer = () => {
                 onSearch={handleSearchSubmit}
                 isLoading={isProfileLoading}
                 initialValue={value}
-                suggestions={
-                    searchResults?.items?.map((user) => user.login) || []
-                }
+                suggestions={searchResults?.items || []}
                 isSearching={isSearching}
                 onInputChange={setValue}
             />
