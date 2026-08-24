@@ -1,8 +1,6 @@
-import {
-    Email as EmailIcon,
-    Link as LinkIcon,
-    LocationOn as LocationIcon,
-} from '@mui/icons-material';
+import EmailIcon from '@mui/icons-material/Email';
+import LinkIcon from '@mui/icons-material/Link';
+import LocationIcon from '@mui/icons-material/LocationOn';
 import {
     Avatar,
     Box,

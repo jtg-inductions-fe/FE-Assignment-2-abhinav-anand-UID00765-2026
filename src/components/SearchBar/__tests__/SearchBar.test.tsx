@@ -1,15 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { SearchBar } from '@components';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-import { SearchBar } from '../SearchBar.component';
-
-describe('Test', () => {
-    it('Test', () => {
-        expect(1).toBe(1);
-    });
-});
 
 describe('SearchBar Component', () => {
     // If the Searchbar and Button renders
