@@ -1,32 +1,33 @@
 import EmailIcon from '@mui/icons-material/Email';
 import LinkIcon from '@mui/icons-material/Link';
 import LocationIcon from '@mui/icons-material/LocationOn';
-import {
-    Avatar,
-    Box,
-    Button,
-    Card,
-    CardContent,
-    Link,
-    Stack,
-    Typography,
-} from '@mui/material';
+import { Button, Link, Typography } from '@mui/material';
 
-import { profileCardStyles } from './ProfileCard.styles';
+import {
+    StyledAvatar,
+    StyledBio,
+    StyledBodyWrapper,
+    StyledButtonWrapper,
+    StyledCard,
+    StyledCardContent,
+    StyledContentBox,
+    StyledHeader,
+    StyledInfoItem,
+    StyledInfoList,
+    StyledStatBox,
+    StyledStatsStack,
+    StyledUserInfo,
+} from './ProfileCard.styles';
 import type { ProfileCardProps } from './ProfileCard.types';
 
 export const ProfileCard = ({ user }: ProfileCardProps) => (
-    <Card sx={profileCardStyles.card}>
-        <CardContent sx={profileCardStyles.cardContent}>
+    <StyledCard>
+        <StyledCardContent>
             {/* Header Section: Avatar & Username */}
-            <Box sx={profileCardStyles.header}>
-                <Avatar
-                    src={user.avatar_url}
-                    alt={user.login}
-                    sx={profileCardStyles.avatar}
-                />
+            <StyledHeader>
+                <StyledAvatar src={user.avatar_url} alt={user.login} />
 
-                <Box sx={profileCardStyles.userInfo}>
+                <StyledUserInfo>
                     <Typography variant="h5" fontWeight="bold">
                         {user.name ?? user.login}
                     </Typography>
@@ -39,25 +40,21 @@ export const ProfileCard = ({ user }: ProfileCardProps) => (
                     >
                         @{user.login}
                     </Link>
-                </Box>
-            </Box>
+                </StyledUserInfo>
+            </StyledHeader>
 
             {/* Body Section: Bio, Info, Stats, Button */}
-            <Box sx={profileCardStyles.bodyWrapper}>
-                <Box sx={profileCardStyles.contentBox}>
+            <StyledBodyWrapper>
+                <StyledContentBox>
                     {user.bio && (
-                        <Typography
-                            variant="body1"
-                            color="textSecondary"
-                            sx={profileCardStyles.bio}
-                        >
+                        <StyledBio variant="body1" color="textSecondary">
                             {user.bio}
-                        </Typography>
+                        </StyledBio>
                     )}
 
-                    <Box sx={profileCardStyles.infoList}>
+                    <StyledInfoList>
                         {user.email && (
-                            <Box sx={profileCardStyles.infoItem}>
+                            <StyledInfoItem>
                                 <EmailIcon fontSize="small" color="action" />
                                 <Typography
                                     variant="body2"
@@ -65,10 +62,10 @@ export const ProfileCard = ({ user }: ProfileCardProps) => (
                                 >
                                     {user.email}
                                 </Typography>
-                            </Box>
+                            </StyledInfoItem>
                         )}
                         {user.location && (
-                            <Box sx={profileCardStyles.infoItem}>
+                            <StyledInfoItem>
                                 <LocationIcon fontSize="small" color="action" />
                                 <Typography
                                     variant="body2"
@@ -76,10 +73,10 @@ export const ProfileCard = ({ user }: ProfileCardProps) => (
                                 >
                                     {user.location}
                                 </Typography>
-                            </Box>
+                            </StyledInfoItem>
                         )}
                         {user.blog && (
-                            <Box sx={profileCardStyles.infoItem}>
+                            <StyledInfoItem>
                                 <LinkIcon fontSize="small" color="action" />
                                 <Typography
                                     variant="body2"
@@ -98,38 +95,38 @@ export const ProfileCard = ({ user }: ProfileCardProps) => (
                                         {user.blog}
                                     </Link>
                                 </Typography>
-                            </Box>
+                            </StyledInfoItem>
                         )}
-                    </Box>
+                    </StyledInfoList>
 
-                    <Stack direction="row" sx={profileCardStyles.statsStack}>
-                        <Box sx={profileCardStyles.statBox}>
+                    <StyledStatsStack direction="row">
+                        <StyledStatBox>
                             <Typography variant="caption" color="textSecondary">
                                 Repos
                             </Typography>
                             <Typography variant="h6" fontWeight="bold">
                                 {user.public_repos}
                             </Typography>
-                        </Box>
-                        <Box sx={profileCardStyles.statBox}>
+                        </StyledStatBox>
+                        <StyledStatBox>
                             <Typography variant="caption" color="textSecondary">
                                 Followers
                             </Typography>
                             <Typography variant="h6" fontWeight="bold">
                                 {user.followers}
                             </Typography>
-                        </Box>
-                        <Box sx={profileCardStyles.statBox}>
+                        </StyledStatBox>
+                        <StyledStatBox>
                             <Typography variant="caption" color="textSecondary">
                                 Following
                             </Typography>
                             <Typography variant="h6" fontWeight="bold">
                                 {user.following}
                             </Typography>
-                        </Box>
-                    </Stack>
+                        </StyledStatBox>
+                    </StyledStatsStack>
 
-                    <Box sx={profileCardStyles.buttonWrapper}>
+                    <StyledButtonWrapper>
                         <Button
                             variant="contained"
                             color="primary"
@@ -140,9 +137,9 @@ export const ProfileCard = ({ user }: ProfileCardProps) => (
                         >
                             Visit profile on GitHub
                         </Button>
-                    </Box>
-                </Box>
-            </Box>
-        </CardContent>
-    </Card>
+                    </StyledButtonWrapper>
+                </StyledContentBox>
+            </StyledBodyWrapper>
+        </StyledCardContent>
+    </StyledCard>
 );

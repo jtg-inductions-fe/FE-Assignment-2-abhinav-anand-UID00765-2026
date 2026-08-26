@@ -1,83 +1,89 @@
-import type { SxProps, Theme } from '@mui/material';
+import {
+    Avatar,
+    Box,
+    Card,
+    CardContent,
+    Stack,
+    styled,
+    Typography,
+} from '@mui/material';
 
-export const profileCardStyles = {
-    card: {
-        width: '100%',
-        mt: 4,
-        borderRadius: 2,
-        boxShadow: 3,
-    } as SxProps<Theme>,
+export const StyledCard = styled(Card)(({ theme }) => ({
+    width: '100%',
+    marginTop: theme.spacing(4),
+    borderRadius: theme.spacing(2),
+    boxShadow: theme.shadows[3],
+}));
 
-    cardContent: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 3,
-    } as SxProps<Theme>,
+export const StyledCardContent = styled(CardContent)(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: theme.spacing(3),
+}));
 
-    header: {
-        display: 'flex',
-        gap: 3,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-    } as SxProps<Theme>,
+export const StyledHeader = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    gap: theme.spacing(3),
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+}));
 
-    avatar: {
-        width: 120,
-        height: 120,
-        border: '4px solid',
-        borderColor: 'divider',
-    } as SxProps<Theme>,
+export const StyledAvatar = styled(Avatar)(({ theme }) => ({
+    width: 120,
+    height: 120,
+    border: '4px solid',
+    borderColor: theme.palette.divider,
+}));
 
-    userInfo: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: { xs: 'center', sm: 'flex-start' },
-        textAlign: { xs: 'center', sm: 'left' },
-    } as SxProps<Theme>,
+export const StyledUserInfo = styled(Box)({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    textAlign: 'left',
+});
 
-    bodyWrapper: {
-        display: 'flex',
-        gap: 3,
-        flexDirection: 'column',
-        width: '100%',
-    } as SxProps<Theme>,
+export const StyledBodyWrapper = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    gap: theme.spacing(3),
+    flexDirection: 'column',
+    width: '100%',
+}));
 
-    contentBox: {
-        width: '100%',
-    } as SxProps<Theme>,
+export const StyledContentBox = styled(Box)({
+    width: '100%',
+});
 
-    bio: {
-        mt: 1,
-    } as SxProps<Theme>,
+export const StyledBio = styled(Typography)(({ theme }) => ({
+    marginTop: theme.spacing(1),
+}));
 
-    infoList: {
-        mt: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 0.5,
-    } as SxProps<Theme>,
+export const StyledInfoList = styled(Box)(({ theme }) => ({
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    gap: theme.spacing(0.5),
+}));
 
-    infoItem: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: 1,
-    } as SxProps<Theme>,
+export const StyledInfoItem = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacing(1),
+}));
 
-    statsStack: {
-        mt: 2,
-        p: 2,
-        bgcolor: 'background.default',
-        borderRadius: 2,
-        width: '100%',
-        justifyContent: 'space-around',
-    } as SxProps<Theme>,
+export const StyledStatsStack = styled(Stack)(({ theme }) => ({
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.background.default,
+    borderRadius: theme.spacing(2),
+    width: '100%',
+    justifyContent: 'space-around',
+}));
 
-    statBox: {
-        textAlign: 'center',
-    } as SxProps<Theme>,
+export const StyledStatBox = styled(Box)({
+    textAlign: 'center',
+});
 
-    buttonWrapper: {
-        mt: 3,
-        width: '100%',
-    } as SxProps<Theme>,
-};
+export const StyledButtonWrapper = styled(Box)(({ theme }) => ({
+    marginTop: theme.spacing(3),
+    width: '100%',
+}));

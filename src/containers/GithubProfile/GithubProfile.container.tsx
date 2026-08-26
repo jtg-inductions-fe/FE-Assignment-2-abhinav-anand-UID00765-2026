@@ -2,13 +2,17 @@ import { useState } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { Alert, Box, CircularProgress } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 
 import { ProfileCard, SearchBar } from '@components';
 import { useGetGithubUserQuery, useSearchGithubUsersQuery } from '@services';
 
 import { useDebounce } from './GithubProfile.hooks';
-import { githubProfileStyles } from './GithubProfile.styles';
+import {
+    StyledContainer,
+    StyledErrorAlert,
+    StyledLoaderWrapper,
+} from './GithubProfile.styles';
 
 export const GithubProfileContainer = () => {
     // URL routing state
@@ -47,7 +51,7 @@ export const GithubProfileContainer = () => {
     }
 
     return (
-        <Box sx={githubProfileStyles.container}>
+        <StyledContainer>
             <SearchBar
                 key={SearchQuery}
                 onSearch={handleSearchSubmit}
@@ -59,20 +63,20 @@ export const GithubProfileContainer = () => {
             />
 
             {isProfileLoading && (
-                <Box sx={githubProfileStyles.loaderWrapper}>
+                <StyledLoaderWrapper>
                     <CircularProgress aria-label="Loading…" />
-                </Box>
+                </StyledLoaderWrapper>
             )}
 
             {error && !isProfileLoading && (
-                <Alert severity="error" sx={githubProfileStyles.errorAlert}>
+                <StyledErrorAlert severity="error">
                     {errorMessage}
-                </Alert>
+                </StyledErrorAlert>
             )}
 
             {SearchQuery && profileData && !isProfileLoading && !error && (
                 <ProfileCard user={profileData} />
             )}
-        </Box>
+        </StyledContainer>
     );
 };

@@ -1,19 +1,18 @@
-import type { SxProps, Theme } from '@mui/material';
+import { Avatar, Button, styled } from '@mui/material';
 
-export const searchBarStyles = {
-    formContainer: {
-        display: 'flex',
-        gap: 2,
-        width: '100%',
-    } as SxProps<Theme>,
+export const StyledFormContainer = styled('form')(({ theme }) => ({
+    display: 'flex',
+    gap: theme.spacing(2),
+    width: '100%',
+}));
 
-    submitButton: {
-        px: 4,
-    } as SxProps<Theme>,
+export const StyledSubmitButton = styled(Button)(({ theme }) => ({
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
+}));
 
-    optionAvatar: {
-        width: 28,
-        height: 28,
-        mr: 2,
-    },
-};
+export const StyledOptionAvatar = styled(Avatar)(({ theme }) => ({
+    width: 28,
+    height: 28,
+    marginRight: theme.spacing(2),
+}));

@@ -1,19 +1,17 @@
-import type { SxProps, Theme } from '@mui/material';
+import { Alert, Box, styled } from '@mui/material';
 
-export const githubProfileStyles = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        width: '100%',
-    } as SxProps<Theme>,
+export const StyledContainer = styled(Box)({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+});
 
-    loaderWrapper: {
-        mt: 4,
-    } as SxProps<Theme>,
+export const StyledLoaderWrapper = styled(Box)(({ theme }) => ({
+    marginTop: theme.spacing(4),
+}));
 
-    errorAlert: {
-        width: '100%',
-        mt: 2,
-    } as SxProps<Theme>,
-};
+export const StyledErrorAlert = styled(Alert)(({ theme }) => ({
+    width: '100%',
+    marginTop: theme.spacing(2),
+}));
