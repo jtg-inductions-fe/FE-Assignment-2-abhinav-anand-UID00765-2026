@@ -2,9 +2,16 @@ import { useSelector } from 'react-redux';
 
 import { Box, Container } from '@mui/material';
 
-import { MetricsPanel, ProfileCard, ErrorBoundary, Info, Stats, ActionButtons } from '@components';
+import {
+    ActionButtons,
+    DetailItems,
+    ErrorBoundary,
+    MetricsPanel,
+    ProfileCard,
+    Stats,
+} from '@components';
+import { mapGithubProfile } from '@containers/GithubProfile';
 import { RootState } from '@store';
-import { mapGithubProfile } from '@utils';
 
 export const UserProfile = () => {
     const user = useSelector((state: RootState) => state.auth.user);
@@ -18,11 +25,10 @@ export const UserProfile = () => {
         <Container maxWidth="md">
             <ErrorBoundary>
                 <Box mt={4} mb={4} width="100%">
-                    {   
-                        ProfleCardProps &&
+                    {ProfleCardProps && (
                         <ProfileCard {...ProfleCardProps.card}>
-                            {ProfleCardProps.info && (
-                                <Info {...ProfleCardProps.info} />
+                            {ProfleCardProps.detailItems && (
+                                <DetailItems {...ProfleCardProps.detailItems} />
                             )}
                             {ProfleCardProps.stats && (
                                 <Stats {...ProfleCardProps.stats} />
@@ -34,7 +40,7 @@ export const UserProfile = () => {
                                 <MetricsPanel {...ProfleCardProps.metrics} />
                             )}
                         </ProfileCard>
-                    }
+                    )}
                 </Box>
             </ErrorBoundary>
         </Container>

@@ -1,18 +1,20 @@
 import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 import {
     Alert,
     Box,
     Button,
+    Card,
     Container,
-    Paper,
+    Stack,
     TextField,
     Typography,
 } from '@mui/material';
 
-import { useLoginUserMutation } from '@services';
 import { ErrorBoundary } from '@components';
+import { useLoginUserMutation } from '@services';
 
 export const LoginContainer = () => {
     const navigate = useNavigate();
@@ -54,7 +56,7 @@ export const LoginContainer = () => {
         }
     };
 
-    const displayError =
+    const errorMessage =
         validationError ||
         (apiError as { message?: string })?.message ||
         'Login failed. Please check your credentials.';
@@ -62,28 +64,23 @@ export const LoginContainer = () => {
     return (
         <Container component="main" maxWidth="xs">
             <ErrorBoundary>
-                <Paper elevation={3}>
-                    <Box
-                        mt={8}
-                        p={4}
-                        display="flex"
-                        flexDirection="column"
-                        alignItems="center"
-                        bgcolor="background.default"
-                    >
-                        <Typography component="h1" variant="h5">
+                <Card>
+                    <Stack padding={4} textAlign="center">
+                        <Typography component="h1" variant="h5" lines={1}>
                             Login
                         </Typography>
 
                         <Box
                             component="form"
                             onSubmit={(e) => void handleSubmit(e)}
-                            mt={1}
+                            marginTop={1}
                             width="100%"
                         >
                             {(validationError || apiError) && (
-                                <Box my={2}>
-                                    <Alert severity="error">{displayError}</Alert>
+                                <Box marginY={2}>
+                                    <Alert severity="error">
+                                        {errorMessage}
+                                    </Alert>
                                 </Box>
                             )}
 
@@ -99,7 +96,8 @@ export const LoginContainer = () => {
                                     e: React.ChangeEvent<HTMLInputElement>,
                                 ) => setUsername(e.target.value)}
                                 error={
-                                    !!validationError && username.trim().length < 3
+                                    !!validationError &&
+                                    username.trim().length < 3
                                 }
                             />
 
@@ -118,19 +116,21 @@ export const LoginContainer = () => {
                                 error={!!validationError && !password.trim()}
                             />
 
-                            <Box mt={3} mb={2}>
+                            <Box marginTop={3} marginBottom={2}>
                                 <Button
                                     type="submit"
                                     fullWidth
                                     variant="contained"
                                     disabled={isLoading}
                                 >
-                                    {isLoading ? 'Authenticating...' : 'Sign In'}
+                                    {isLoading
+                                        ? 'Authenticating...'
+                                        : 'Sign In'}
                                 </Button>
                             </Box>
                         </Box>
-                    </Box>
-                </Paper>
+                    </Stack>
+                </Card>
             </ErrorBoundary>
         </Container>
     );

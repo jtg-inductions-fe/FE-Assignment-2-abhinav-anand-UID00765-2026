@@ -1,11 +1,9 @@
-import { Box } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { LoginContainer } from '@containers';
 
-import { LoginPageStyles } from './Login.styles';
-
 export const LoginPage = () => (
-    <Box sx={LoginPageStyles.container}>
+    <Stack flex={1} justifyContent="center">
         <LoginContainer />
-    </Box>
+    </Stack>
 );

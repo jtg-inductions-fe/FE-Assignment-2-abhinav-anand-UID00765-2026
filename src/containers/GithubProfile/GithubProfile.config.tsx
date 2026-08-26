@@ -1,8 +1,8 @@
 import EmailIcon from '@mui/icons-material/Email';
-import LinkIcon from '@mui/icons-material/Link';
-import LocationIcon from '@mui/icons-material/LocationOn';
 import FolderSpecialIcon from '@mui/icons-material/FolderSpecial';
 import GroupIcon from '@mui/icons-material/Group';
+import LinkIcon from '@mui/icons-material/Link';
+import LocationIcon from '@mui/icons-material/LocationOn';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 import type { GitHubUser } from '@services';
@@ -132,6 +132,6 @@ export const mapGithubProfile = (profileData: GitHubUser | undefined) => {
                           : undefined,
               }
             : null;
-    
+
     return { card, action, stats, detailItems, metrics };
 };

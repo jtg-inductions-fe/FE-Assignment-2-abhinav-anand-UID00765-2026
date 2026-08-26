@@ -9,10 +9,10 @@ import {
     Avatar,
     DetailItems,
     ErrorBoundary,
+    MetricsPanel,
     ProfileCard,
     SearchBar,
     Stats,
-    MetricsPanel,
 } from '@components';
 import { useDebounce } from '@hooks';
 import { useGetGithubUserQuery, useSearchGithubUsersQuery } from '@services';

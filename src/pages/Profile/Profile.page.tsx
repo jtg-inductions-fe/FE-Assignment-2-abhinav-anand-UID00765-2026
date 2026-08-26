@@ -1,11 +1,9 @@
-import { Box } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { UserProfile } from '@containers';
 
-import { ProfilePageStyles } from './Profile.styles';
-
 export const ProfilePage = () => (
-    <Box sx={ProfilePageStyles.container}>
+    <Stack flex={1} justifyContent="center">
         <UserProfile />
-    </Box>
+    </Stack>
 );

@@ -7,25 +7,25 @@ export const MetricsPanel = ({ metrics, progress }: MetricsPanelProps) => {
     if (metrics.length === 0 && !progress) return null;
 
     return (
-        <Box mt={3} width="100%">
-            <Box mb={2}>
+        <Box width="100%">
+            <Box marginY={3}>
                 <Divider />
             </Box>
 
-            <Stack
-                spacing={2}
-                mb={progress ? 3 : 0}
-                flexWrap="wrap"
-            >
+            <Stack gap={2} marginBottom={3} flexWrap="wrap">
                 {metrics.map((metric, index) => (
                     <Stack
                         key={index}
                         direction="row"
                         alignItems="center"
-                        spacing={1}
+                        gap={2}
                     >
                         {metric.icon}
-                        <Typography variant="body2" color="textSecondary">
+                        <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            lines={1}
+                        >
                             {metric.label}:{' '}
                             <Typography
                                 component="span"
@@ -40,16 +40,20 @@ export const MetricsPanel = ({ metrics, progress }: MetricsPanelProps) => {
             </Stack>
 
             {progress && (
-                <Box width="100%">
-                    <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        mb={0.5}
-                    >
-                        <Typography variant="body2" color="textSecondary">
+                <Stack gap={1} marginTop={2}>
+                    <Stack direction="row" justifyContent="space-between">
+                        <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            lines={1}
+                        >
                             {progress.label}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary">
+                        <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            lines={1}
+                        >
                             {progress.text}
                         </Typography>
                     </Stack>
@@ -59,7 +63,7 @@ export const MetricsPanel = ({ metrics, progress }: MetricsPanelProps) => {
                         value={progress.percent}
                         color={progress.color || 'primary'}
                     />
-                </Box>
+                </Stack>
             )}
         </Box>
     );
