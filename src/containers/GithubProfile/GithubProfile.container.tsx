@@ -12,6 +12,7 @@ import {
     ProfileCard,
     SearchBar,
     Stats,
+    MetricsPanel,
 } from '@components';
 import { useDebounce } from '@hooks';
 import { useGetGithubUserQuery, useSearchGithubUsersQuery } from '@services';
@@ -118,6 +119,9 @@ export const GithubProfileContainer = () => {
                             )}
                             {ProfleCardProps.action && (
                                 <ActionButtons {...ProfleCardProps.action} />
+                            )}
+                            {ProfleCardProps.metrics && (
+                                <MetricsPanel {...ProfleCardProps.metrics} />
                             )}
                         </ProfileCard>
                     )}

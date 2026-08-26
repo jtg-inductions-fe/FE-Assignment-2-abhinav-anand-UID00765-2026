@@ -12,6 +12,18 @@ export type GitHubUser = {
     public_repos: number;
     followers: number;
     following: number;
+
+    // Private Fields
+    total_private_repos?: number;
+    owned_private_repos?: number;
+    collaborators?: number;
+    disk_usage?: number;
+    plan?: {
+        name: string;
+        space: number;
+        private_repos: number;
+        collaborators: number;
+    };
 };
 
 // Represents a single user object in search suggestions

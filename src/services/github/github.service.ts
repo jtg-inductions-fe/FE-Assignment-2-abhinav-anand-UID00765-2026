@@ -18,8 +18,23 @@ export const githubApi = baseApi.injectEndpoints({
                 },
             }),
         }),
+        loginUser: builder.mutation<GitHubUser, string>({
+            query: (token) => ({
+                url: 'user',
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: 'application/vnd.github.v3+json',
+                    'X-GitHub-Api-Version': '2026-03-10',
+                },
+            }),
+        }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetGithubUserQuery, useSearchGithubUsersQuery } = githubApi;
+export const {
+    useGetGithubUserQuery,
+    useSearchGithubUsersQuery,
+    useLoginUserMutation,
+} = githubApi;
