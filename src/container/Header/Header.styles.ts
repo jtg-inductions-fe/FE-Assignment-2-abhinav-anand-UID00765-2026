@@ -1,19 +1,18 @@
-import { SxProps, Theme } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-export const headerStyles = {
-    appBar: {
-        borderBottom: '1px solid',
-        borderColor: 'divider',
-        position: 'sticky',
-        backgroundImage: 'none',
-    } as SxProps<Theme>,
+import { AppBar, styled } from '@mui/material';
 
-    title: {
-        textDecoration: 'none',
-        color: 'text.primary',
-        fontWeight: 'bold',
-        '&:hover': {
-            color: 'primary.main',
-        },
-    } as SxProps<Theme>,
-};
+export const NavBar = styled(AppBar)(({ theme }) => ({
+    borderBottom: '1px solid',
+    borderColor: theme.palette.divider,
+    position: 'sticky',
+    backgroundImage: 'none',
+}));
+
+export const Title = styled(Link)(({ theme }) => ({
+    textDecoration: 'none',
+    color: theme.palette.text.primary,
+    '&:hover': {
+        color: theme.palette.primary.main,
+    },
+}));

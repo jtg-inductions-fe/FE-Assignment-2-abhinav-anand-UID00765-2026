@@ -1,20 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Toolbar, Typography } from '@mui/material';
 
-import { AppBar, Toolbar, Typography } from '@mui/material';
-
-import { headerStyles } from './Header.styles';
+import { NavBar, Title } from './Header.styles';
 
 export const Header = () => (
-    <AppBar sx={headerStyles.appBar}>
+    <NavBar>
         <Toolbar>
-            <Typography
-                variant="h6"
-                component={Link}
-                to="/"
-                sx={headerStyles.title}
-            >
+            <Typography variant="h6" component={Title} to="/">
                 GitHub Explorer
             </Typography>
         </Toolbar>
-    </AppBar>
+    </NavBar>
 );

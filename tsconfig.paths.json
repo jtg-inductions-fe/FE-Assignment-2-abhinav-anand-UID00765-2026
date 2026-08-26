@@ -10,7 +10,8 @@
             "@layouts": ["layouts/index"],
             "@routes": ["routes/index"],
             "@components": ["components/index"],
-            "@container": ["container/index"]
+            "@container": ["container/index"],
+            "@constants": ["constants/index"]
         }
     }
 }

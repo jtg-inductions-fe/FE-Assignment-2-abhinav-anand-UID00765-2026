@@ -13,7 +13,7 @@ export const COLORS = {
         LIGHT: '#2ea043',
         DARK: '#196c2e',
     },
-    BG: {
+    BACKGROUND: {
         DEFAULT: '#0d1117',
         PAPER: '#161b22',
     },

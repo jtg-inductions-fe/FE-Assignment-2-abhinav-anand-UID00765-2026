@@ -1,16 +1,15 @@
-import { SxProps, Theme } from '@mui/material';
+import { Box, Container, styled } from '@mui/material';
 
-export const mainLayoutStyles = {
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100dvh',
-    } as SxProps<Theme>,
+export const Root = styled(Box)({
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100dvh',
+});
 
-    container: {
-        flexGrow: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        py: 4,
-    } as SxProps<Theme>,
-};
+export const BodyContainer = styled(Container)(({ theme }) => ({
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+}));

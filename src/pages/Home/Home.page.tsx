@@ -1,9 +1,9 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
-import { homePageStyles } from './Home.styles';
+import { HomeContainer } from './Home.styles';
 
 export const HomePage = () => (
-    <Box sx={homePageStyles.container}>
+    <HomeContainer>
         <Typography variant="h4">Home Page</Typography>
-    </Box>
+    </HomeContainer>
 );
