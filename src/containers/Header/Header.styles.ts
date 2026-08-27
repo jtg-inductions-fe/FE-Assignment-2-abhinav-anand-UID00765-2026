@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { AppBar, styled } from '@mui/material';
+import { AppBar, MenuItem, styled, Toolbar } from '@mui/material';
 
 export const StyledNavbar = styled(AppBar)(({ theme }) => {
     const {
@@ -15,6 +15,11 @@ export const StyledNavbar = styled(AppBar)(({ theme }) => {
     };
 });
 
+export const StyledToolbar = styled(Toolbar)({
+    display: 'flex',
+    justifyContent: 'space-between',
+});
+
 export const StyledBrandLink = styled(Link)(({ theme }) => {
     const {
         palette: { text, primary },
@@ -25,6 +30,22 @@ export const StyledBrandLink = styled(Link)(({ theme }) => {
         color: text.primary,
         '&:hover': {
             color: primary.main,
+        },
+    };
+});
+
+export const StyledMenuItem = styled(MenuItem)(({ theme }) => {
+    const {
+        palette: { primary, action },
+        typography: { pxToRem },
+    } = theme;
+
+    return {
+        minWidth: pxToRem(160),
+        transition: 'all 0.3s',
+        '&:hover': {
+            color: primary.main,
+            backgroundColor: action.hover,
         },
     };
 });
