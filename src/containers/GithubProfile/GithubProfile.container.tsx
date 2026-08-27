@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { Box, CircularProgress, Stack, Typography } from '@mui/material';
@@ -14,12 +15,22 @@ import {
     Stats,
 } from '@components';
 import { useDebounce } from '@hooks';
-import { useGetGithubUserQuery, useSearchGithubUsersQuery } from '@services';
+import {
+    useCheckIfFollowingQuery,
+    useFollowUserMutation,
+    useGetGithubUserQuery,
+    useSearchGithubUsersQuery,
+    useUnfollowUserMutation,
+} from '@services';
+import { RootState } from '@store';
 
 import { mapGithubProfile } from './GithubProfile.config';
 import { StyledErrorAlert } from './GithubProfile.styles';
 
 export const GithubProfileContainer = () => {
+    // Current User
+    const { user: currentUser } = useSelector((state: RootState) => state.auth);
+
     // URL routing state
     const [searchParams, setSearchParams] = useSearchParams();
     const SearchQuery = searchParams.get('user') ?? '';
@@ -43,6 +54,31 @@ export const GithubProfileContainer = () => {
         error,
         isFetching: isProfileLoading,
     } = useGetGithubUserQuery(SearchQuery, { skip: !SearchQuery });
+
+    // Follow functionality logic
+    const isOtherUser = Boolean(
+        currentUser && profileData && currentUser.login !== profileData.login,
+    );
+
+    const { data: isFollowingUser, isLoading: isCheckLoading } =
+        useCheckIfFollowingQuery(profileData?.login ?? '', {
+            skip: !isOtherUser || !profileData,
+        });
+
+    const [followUser, { isLoading: isFollowing }] = useFollowUserMutation();
+    const [unfollowUser, { isLoading: isUnfollowing }] =
+        useUnfollowUserMutation();
+
+    const handleFollowToggle = () => {
+        if (!profileData) return;
+        if (isFollowingUser) {
+            void unfollowUser(profileData.login);
+        } else {
+            void followUser(profileData.login);
+        }
+    };
+
+    const isFollowLoading = isCheckLoading || isFollowing || isUnfollowing;
 
     const handleSearchSubmit = (username: string) => {
         setSearchParams({ user: username });
@@ -115,7 +151,25 @@ export const GithubProfileContainer = () => {
                                 <Stats {...ProfleCardProps.stats} />
                             )}
                             {ProfleCardProps.action && (
-                                <ActionButtons {...ProfleCardProps.action} />
+                                <ActionButtons
+                                    actions={[
+                                        ...(isOtherUser
+                                            ? [
+                                                  {
+                                                      label: isFollowingUser
+                                                          ? 'Unfollow'
+                                                          : 'Follow',
+                                                      variant:
+                                                          'outlined' as const,
+                                                      onClick:
+                                                          handleFollowToggle,
+                                                      loading: isFollowLoading,
+                                                  },
+                                              ]
+                                            : []),
+                                        ...ProfleCardProps.action.actions,
+                                    ]}
+                                />
                             )}
                         </ProfileCard>
                     )}
