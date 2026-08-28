@@ -6,5 +6,6 @@ export type SearchBarProps = {
     initialValue: string;
     suggestions: GitHubUserListItem[];
     isSearching: boolean;
+    isSubmitDisabled: boolean;
     onInputChange: (value: string) => void;
 };

@@ -2,17 +2,13 @@ import { useState } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Stack } from '@mui/material';
 
 import { ProfileCard, SearchBar } from '@components';
+import { useDebounce } from '@hooks';
 import { useGetGithubUserQuery, useSearchGithubUsersQuery } from '@services';
 
-import { useDebounce } from './GithubProfile.hooks';
-import {
-    StyledContainer,
-    StyledErrorAlert,
-    StyledLoaderWrapper,
-} from './GithubProfile.styles';
+import { StyledErrorAlert } from './GithubProfile.styles';
 
 export const GithubProfileContainer = () => {
     // URL routing state
@@ -44,6 +40,8 @@ export const GithubProfileContainer = () => {
         setValue(username);
     };
 
+    const isSearchDisabled = isProfileLoading || !value.trim();
+
     if (error && 'status' in error && error.status === 404) {
         errorMessage = 'User not found';
     } else if (error && 'status' in error && error.status === 403) {
@@ -51,7 +49,7 @@ export const GithubProfileContainer = () => {
     }
 
     return (
-        <StyledContainer>
+        <Stack alignItems="center" width="100%">
             <SearchBar
                 key={SearchQuery}
                 onSearch={handleSearchSubmit}
@@ -59,13 +57,14 @@ export const GithubProfileContainer = () => {
                 initialValue={value}
                 suggestions={searchResults?.items || []}
                 isSearching={isSearching}
+                isSubmitDisabled={isSearchDisabled}
                 onInputChange={setValue}
             />
 
             {isProfileLoading && (
-                <StyledLoaderWrapper>
+                <Box mt={4}>
                     <CircularProgress aria-label="Loading…" />
-                </StyledLoaderWrapper>
+                </Box>
             )}
 
             {error && !isProfileLoading && (
@@ -77,6 +76,6 @@ export const GithubProfileContainer = () => {
             {SearchQuery && profileData && !isProfileLoading && !error && (
                 <ProfileCard user={profileData} />
             )}
-        </StyledContainer>
+        </Stack>
     );
 };

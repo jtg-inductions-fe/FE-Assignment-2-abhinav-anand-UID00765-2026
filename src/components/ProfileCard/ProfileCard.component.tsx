@@ -1,60 +1,69 @@
 import EmailIcon from '@mui/icons-material/Email';
 import LinkIcon from '@mui/icons-material/Link';
 import LocationIcon from '@mui/icons-material/LocationOn';
-import { Button, Link, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    CardContent,
+    Link,
+    Stack,
+    Typography,
+} from '@mui/material';
 
 import {
     StyledAvatar,
-    StyledBio,
-    StyledBodyWrapper,
-    StyledButtonWrapper,
     StyledCard,
-    StyledCardContent,
-    StyledContentBox,
-    StyledHeader,
-    StyledInfoItem,
-    StyledInfoList,
-    StyledStatBox,
     StyledStatsStack,
-    StyledUserInfo,
 } from './ProfileCard.styles';
 import type { ProfileCardProps } from './ProfileCard.types';
 
 export const ProfileCard = ({ user }: ProfileCardProps) => (
     <StyledCard>
-        <StyledCardContent>
-            {/* Header Section: Avatar & Username */}
-            <StyledHeader>
-                <StyledAvatar src={user.avatar_url} alt={user.login} />
+        <CardContent>
+            <Stack direction="column" spacing={3}>
+                {/* Header Section: Avatar & Username */}
+                <Stack direction="row" spacing={3} alignItems="center">
+                    <StyledAvatar src={user.avatar_url} alt={user.login} />
 
-                <StyledUserInfo>
-                    <Typography variant="h5" fontWeight="bold">
-                        {user.name ?? user.login}
-                    </Typography>
-                    <Link
-                        href={user.html_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        color="primary"
-                        underline="hover"
+                    <Stack
+                        direction="column"
+                        alignItems="flex-start"
+                        textAlign="left"
                     >
-                        @{user.login}
-                    </Link>
-                </StyledUserInfo>
-            </StyledHeader>
+                        <Typography variant="h5" fontWeight="bold">
+                            {user.name ?? user.login}
+                        </Typography>
+                        <Link
+                            href={user.html_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            color="primary"
+                            underline="hover"
+                        >
+                            @{user.login}
+                        </Link>
+                    </Stack>
+                </Stack>
 
-            {/* Body Section: Bio, Info, Stats, Button */}
-            <StyledBodyWrapper>
-                <StyledContentBox>
+                {/* Body Section: Bio, Info, Stats, Button */}
+                <Box>
                     {user.bio && (
-                        <StyledBio variant="body1" color="textSecondary">
+                        <Typography
+                            variant="body1"
+                            color="textSecondary"
+                            mt={1}
+                        >
                             {user.bio}
-                        </StyledBio>
+                        </Typography>
                     )}
 
-                    <StyledInfoList>
+                    <Stack direction="column" spacing={0.5} mt={2}>
                         {user.email && (
-                            <StyledInfoItem>
+                            <Stack
+                                direction="row"
+                                alignItems="center"
+                                spacing={1}
+                            >
                                 <EmailIcon fontSize="small" color="action" />
                                 <Typography
                                     variant="body2"
@@ -62,10 +71,14 @@ export const ProfileCard = ({ user }: ProfileCardProps) => (
                                 >
                                     {user.email}
                                 </Typography>
-                            </StyledInfoItem>
+                            </Stack>
                         )}
                         {user.location && (
-                            <StyledInfoItem>
+                            <Stack
+                                direction="row"
+                                alignItems="center"
+                                spacing={1}
+                            >
                                 <LocationIcon fontSize="small" color="action" />
                                 <Typography
                                     variant="body2"
@@ -73,10 +86,14 @@ export const ProfileCard = ({ user }: ProfileCardProps) => (
                                 >
                                     {user.location}
                                 </Typography>
-                            </StyledInfoItem>
+                            </Stack>
                         )}
                         {user.blog && (
-                            <StyledInfoItem>
+                            <Stack
+                                direction="row"
+                                alignItems="center"
+                                spacing={1}
+                            >
                                 <LinkIcon fontSize="small" color="action" />
                                 <Typography
                                     variant="body2"
@@ -95,38 +112,41 @@ export const ProfileCard = ({ user }: ProfileCardProps) => (
                                         {user.blog}
                                     </Link>
                                 </Typography>
-                            </StyledInfoItem>
+                            </Stack>
                         )}
-                    </StyledInfoList>
+                    </Stack>
 
-                    <StyledStatsStack direction="row">
-                        <StyledStatBox>
+                    <StyledStatsStack
+                        direction="row"
+                        justifyContent="space-around"
+                    >
+                        <Box textAlign="center">
                             <Typography variant="caption" color="textSecondary">
                                 Repos
                             </Typography>
                             <Typography variant="h6" fontWeight="bold">
                                 {user.public_repos}
                             </Typography>
-                        </StyledStatBox>
-                        <StyledStatBox>
+                        </Box>
+                        <Box textAlign="center">
                             <Typography variant="caption" color="textSecondary">
                                 Followers
                             </Typography>
                             <Typography variant="h6" fontWeight="bold">
                                 {user.followers}
                             </Typography>
-                        </StyledStatBox>
-                        <StyledStatBox>
+                        </Box>
+                        <Box textAlign="center">
                             <Typography variant="caption" color="textSecondary">
                                 Following
                             </Typography>
                             <Typography variant="h6" fontWeight="bold">
                                 {user.following}
                             </Typography>
-                        </StyledStatBox>
+                        </Box>
                     </StyledStatsStack>
 
-                    <StyledButtonWrapper>
+                    <Box mt={3}>
                         <Button
                             variant="contained"
                             color="primary"
@@ -137,9 +157,9 @@ export const ProfileCard = ({ user }: ProfileCardProps) => (
                         >
                             Visit profile on GitHub
                         </Button>
-                    </StyledButtonWrapper>
-                </StyledContentBox>
-            </StyledBodyWrapper>
-        </StyledCardContent>
+                    </Box>
+                </Box>
+            </Stack>
+        </CardContent>
     </StyledCard>
 );
