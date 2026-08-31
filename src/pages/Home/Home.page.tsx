@@ -1,4 +1,5 @@
 import { Stack, Typography } from '@mui/material';
+
 import { GithubProfileContainer } from '@containers';
 
 import { ErrorBoundary } from '@components';

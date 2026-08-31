@@ -15,13 +15,18 @@ describe('SearchBar Component', () => {
                 onInputChange={vi.fn()}
                 isLoading={false}
                 isSearching={false}
+                isSubmitDisabled={false}
+                placeholder="Enter GitHub username..."
+                getOptionLabel={(option) =>
+                    typeof option === 'string' ? option : ''
+                }
             />,
         );
 
         const input = screen.getByPlaceholderText('Enter GitHub username...');
         expect(input).toBeInTheDocument();
 
-        const button = screen.getByText('Search');
+        const button = screen.getByRole('button');
         expect(button).toBeInTheDocument();
     });
 
@@ -58,12 +63,21 @@ describe('SearchBar Component', () => {
                 onInputChange={vi.fn()}
                 isLoading={false}
                 isSearching={false}
+                isSubmitDisabled={false}
+                placeholder="Enter GitHub username..."
+                getOptionLabel={(option) =>
+                    typeof option === 'string' ? option : option.login
+                }
+                getOptionKey={(option) => option.login}
+                renderOptionContent={(option) => <span>{option.login}</span>}
             />,
         );
 
         // In MUI the Autocomplete input has the aria role of "combobox"
         const input = screen.getByRole('combobox');
         await user.click(input);
+
+        await user.keyboard('{ArrowDown}');
 
         // Wait for the dropdown "listbox" to render
         const listbox = await screen.findByRole('listbox');

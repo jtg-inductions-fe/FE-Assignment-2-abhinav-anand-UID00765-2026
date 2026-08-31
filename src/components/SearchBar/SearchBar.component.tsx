@@ -1,13 +1,11 @@
 import React from 'react';
 
-import { Autocomplete, Box, Stack, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Stack, TextField } from '@mui/material';
 
-import type { GitHubUserListItem } from '@services';
-
-import { StyledOptionAvatar, StyledSubmitButton } from './SearchBar.styles';
+import { StyledSubmitButton } from './SearchBar.styles';
 import type { SearchBarProps } from './SearchBar.types';
 
-export const SearchBar = ({
+export const SearchBar = <T,>({
     onSearch,
     isLoading,
     initialValue,
@@ -15,10 +13,15 @@ export const SearchBar = ({
     isSearching,
     isSubmitDisabled,
     onInputChange,
-}: SearchBarProps) => {
+    getOptionLabel,
+    renderOptionContent,
+    getOptionKey,
+    label = 'Search',
+    placeholder = 'Type to search...',
+}: SearchBarProps<T>) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (initialValue.trim()) {
+        if (initialValue.trim() && !isSubmitDisabled) {
             onSearch(initialValue.trim());
         }
     };
@@ -32,26 +35,26 @@ export const SearchBar = ({
             width="100%"
         >
             <Box flexGrow={1}>
-                <Autocomplete
+                <Autocomplete<T, false, false, true>
                     fullWidth
                     freeSolo
                     options={suggestions}
                     loading={isSearching}
                     inputValue={initialValue}
-                    getOptionLabel={(user) =>
-                        typeof user === 'string' ? user : user.login
-                    }
-                    renderOption={(props, user: GitHubUserListItem) => (
-                        <Box component="li" {...props} key={user.login}>
-                            <StyledOptionAvatar
-                                src={user.avatar_url}
-                                alt={user.login}
-                            />
-                            <Typography variant="body1">
-                                {user.login}
-                            </Typography>
-                        </Box>
-                    )}
+                    getOptionLabel={getOptionLabel}
+                    renderOption={(props, option) => {
+                        const key = getOptionKey
+                            ? getOptionKey(option)
+                            : getOptionLabel(option);
+
+                        return (
+                            <Box component="li" {...props} key={key}>
+                                {renderOptionContent
+                                    ? renderOptionContent(option)
+                                    : getOptionLabel(option)}
+                            </Box>
+                        );
+                    }}
                     onInputChange={(_, newInputValue) =>
                         onInputChange(newInputValue)
                     }
@@ -60,15 +63,15 @@ export const SearchBar = ({
                             onSearch(
                                 typeof newValue === 'string'
                                     ? newValue
-                                    : newValue.login,
+                                    : getOptionLabel(newValue),
                             );
                         }
                     }}
                     renderInput={(params) => (
                         <TextField
                             {...params}
-                            label="GitHub username"
-                            placeholder="Enter GitHub username..."
+                            label={label}
+                            placeholder={placeholder}
                             disabled={isLoading}
                         />
                     )}

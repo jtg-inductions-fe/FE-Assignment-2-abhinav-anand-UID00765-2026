@@ -5,13 +5,13 @@ import { useSearchParams } from 'react-router-dom';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkIcon from '@mui/icons-material/Link';
 import LocationIcon from '@mui/icons-material/LocationOn';
-import { Box, CircularProgress, Stack } from '@mui/material';
+import { Box, CircularProgress, Stack, Typography } from '@mui/material';
 
 import { ProfileCard, SearchBar } from '@components';
 import { useDebounce } from '@hooks';
 import { useGetGithubUserQuery, useSearchGithubUsersQuery } from '@services';
 
-import { StyledErrorAlert } from './GithubProfile.styles';
+import { StyledErrorAlert, StyledOptionAvatar } from './GithubProfile.styles';
 
 export const GithubProfileContainer = () => {
     // URL routing state
@@ -66,6 +66,21 @@ export const GithubProfileContainer = () => {
                 isSearching={isSearching}
                 isSubmitDisabled={isSearchDisabled}
                 onInputChange={setValue}
+                getOptionLabel={(user) =>
+                    typeof user === 'string' ? user : user.login
+                }
+                getOptionKey={(user) => user.login}
+                label="GitHub Username"
+                placeholder="Enter GitHub username..."
+                renderOptionContent={(user) => (
+                    <>
+                        <StyledOptionAvatar
+                            src={user.avatar_url}
+                            alt={user.login}
+                        />
+                        <Typography variant="body1">{user.login}</Typography>
+                    </>
+                )}
             />
 
             {isProfileLoading && (
@@ -131,7 +146,11 @@ export const GithubProfileContainer = () => {
                                           />
                                       ),
                                       text: profileData.blog,
-                                      url: profileData.blog,
+                                      url: /^https?:\/\//i.test(
+                                          profileData.blog,
+                                      )
+                                          ? profileData.blog
+                                          : `https://${profileData.blog}`,
                                   },
                               ]
                             : []),
