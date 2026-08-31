@@ -10,8 +10,9 @@
             "@layouts": ["layouts/index"],
             "@routes": ["routes/index"],
             "@components": ["components/index"],
-            "@container": ["container/index"],
-            "@constants": ["constants/index"]
+            "@containers": ["containers/index"],
+            "@constants": ["constants/index"],
+            "@services/*": ["services/*"]
         }
     }
 }

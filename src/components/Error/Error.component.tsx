@@ -1,37 +1,39 @@
 import React from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { Box, Button, Stack, Typography } from '@mui/material';
 
-import { Typography } from '@mui/material';
+import { ErrorProps } from './Error.types';
 
-import { ErrorButton, ErrorContainer } from './Error.styles';
-import { ErrorDisplayProps } from './Error.types';
-
-export const ErrorComponent: React.FC<ErrorDisplayProps> = ({
+export const Error: React.FC<ErrorProps> = ({
     title,
     message,
     titleColor = 'primary',
-}) => {
-    const navigate = useNavigate();
-
-    return (
-        <ErrorContainer>
-            <Typography variant="h2" color={titleColor} gutterBottom>
+    buttonText,
+    onButtonClick,
+}) => (
+    <Stack
+        flex={1}
+        spacing={2}
+        textAlign="center"
+        justifyContent="center"
+        gap={5}
+    >
+        <Box>
+            <Typography variant="h2" color={titleColor}>
                 {title}
             </Typography>
 
             <Typography variant="h5" color="textSecondary">
                 {message}
             </Typography>
+        </Box>
 
-            <ErrorButton
-                variant="contained"
-                onClick={() => {
-                    void navigate('/');
-                }}
-            >
-                Go Back Home
-            </ErrorButton>
-        </ErrorContainer>
-    );
-};
+        {buttonText && onButtonClick && (
+            <Box>
+                <Button variant="contained" onClick={onButtonClick}>
+                    {buttonText}
+                </Button>
+            </Box>
+        )}
+    </Stack>
+);

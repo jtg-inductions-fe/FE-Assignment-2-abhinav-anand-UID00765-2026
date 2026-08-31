@@ -1,15 +1,15 @@
 import { Outlet } from 'react-router-dom';
 
-import { Header } from '@container';
+import { Container, Stack } from '@mui/material';
 
-import { BodyContainer, Root } from './Main.styles';
+import { Header } from '@containers';
 
 export const MainLayout = () => (
-    <Root>
+    <Stack minHeight="100dvh">
         <Header />
 
-        <BodyContainer>
+        <Container component={Stack} flexGrow={1} paddingTop={4}>
             <Outlet />
-        </BodyContainer>
-    </Root>
+        </Container>
+    </Stack>
 );

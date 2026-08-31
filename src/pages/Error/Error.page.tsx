@@ -1,27 +1,44 @@
-import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
+import { useNavigate, useRouteError } from 'react-router-dom';
 
-import { ErrorComponent } from '@components';
+import { Box } from '@mui/material';
 
-import { ErrorContainer } from './Error.styles';
+import { Error } from '@components';
 
 export const ErrorPage = () => {
     const error = useRouteError();
-    let errorMessage = 'An unexpected error occurred.';
+    const navigate = useNavigate();
+    let errorMessage = '';
 
-    if (isRouteErrorResponse(error)) {
-        const errorData = error.data as { message?: string } | undefined;
-        errorMessage = errorData?.message || error.statusText || errorMessage;
-    } else if (error instanceof Error) {
-        errorMessage = error.message;
+    if (error instanceof Error) {
+        errorMessage = (error as Error).message;
+    } else if (error && typeof error === 'object') {
+        if ('data' in error && error.data && typeof error.data === 'object') {
+            const errorData = error.data as { message?: string };
+            if (
+                typeof errorData.message === 'string' &&
+                errorData.message.trim() !== ''
+            ) {
+                errorMessage = errorData.message;
+            }
+        } else if (
+            'message' in error &&
+            typeof (error as { message: unknown }).message === 'string'
+        ) {
+            errorMessage = (error as { message: string }).message;
+        }
+    } else {
+        errorMessage = 'An unexpected error occurred.';
     }
 
     return (
-        <ErrorContainer>
-            <ErrorComponent
+        <Box display="flex" minHeight="100dvh">
+            <Error
                 title="Something went wrong!"
                 message={errorMessage}
-                titleColor="error"
+                titleColor="textSecondary"
+                buttonText="Go Back Home"
+                onButtonClick={() => void navigate('/')}
             />
-        </ErrorContainer>
+        </Box>
     );
 };

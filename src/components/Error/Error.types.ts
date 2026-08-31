@@ -1,5 +1,7 @@
-export type ErrorDisplayProps = {
+export type ErrorProps = {
     title: string;
     message: string;
-    titleColor?: 'primary' | 'error';
+    titleColor?: string;
+    buttonText?: string;
+    onButtonClick?: () => void;
 };
