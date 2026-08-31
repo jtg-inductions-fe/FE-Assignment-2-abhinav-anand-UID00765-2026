@@ -1,6 +1,3 @@
-import EmailIcon from '@mui/icons-material/Email';
-import LinkIcon from '@mui/icons-material/Link';
-import LocationIcon from '@mui/icons-material/LocationOn';
 import {
     Box,
     Button,
@@ -17,13 +14,23 @@ import {
 } from './ProfileCard.styles';
 import type { ProfileCardProps } from './ProfileCard.types';
 
-export const ProfileCard = ({ user }: ProfileCardProps) => (
+export const ProfileCard = ({
+    imageUrl,
+    imageAlt = 'Profile',
+    title,
+    subtitle,
+    description,
+    infoItems = [],
+    stats = [],
+    actionLabel,
+    actionUrl,
+}: ProfileCardProps) => (
     <StyledCard>
         <CardContent>
             <Stack direction="column" spacing={3}>
-                {/* Header Section: Avatar & Username */}
+                {/* Header Section */}
                 <Stack direction="row" spacing={3} alignItems="center">
-                    <StyledAvatar src={user.avatar_url} alt={user.login} />
+                    <StyledAvatar src={imageUrl} alt={imageAlt} />
 
                     <Stack
                         direction="column"
@@ -31,133 +38,95 @@ export const ProfileCard = ({ user }: ProfileCardProps) => (
                         textAlign="left"
                     >
                         <Typography variant="h5" fontWeight="bold">
-                            {user.name ?? user.login}
+                            {title}
                         </Typography>
-                        <Link
-                            href={user.html_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            color="primary"
-                            underline="hover"
-                        >
-                            @{user.login}
-                        </Link>
+                        {subtitle && (
+                            <Typography variant="body1" color="primary">
+                                {subtitle}
+                            </Typography>
+                        )}
                     </Stack>
                 </Stack>
 
-                {/* Body Section: Bio, Info, Stats, Button */}
+                {/* Body Section */}
                 <Box>
-                    {user.bio && (
+                    {description && (
                         <Typography
                             variant="body1"
                             color="textSecondary"
                             mt={1}
                         >
-                            {user.bio}
+                            {description}
                         </Typography>
                     )}
 
-                    <Stack direction="column" spacing={0.5} mt={2}>
-                        {user.email && (
-                            <Stack
-                                direction="row"
-                                alignItems="center"
-                                spacing={1}
-                            >
-                                <EmailIcon fontSize="small" color="action" />
-                                <Typography
-                                    variant="body2"
-                                    color="textSecondary"
+                    {infoItems.length > 0 && (
+                        <Stack direction="column" spacing={0.5} mt={2}>
+                            {infoItems.map((item, index) => (
+                                <Stack
+                                    key={index}
+                                    direction="row"
+                                    alignItems="center"
+                                    spacing={1}
                                 >
-                                    {user.email}
-                                </Typography>
-                            </Stack>
-                        )}
-                        {user.location && (
-                            <Stack
-                                direction="row"
-                                alignItems="center"
-                                spacing={1}
-                            >
-                                <LocationIcon fontSize="small" color="action" />
-                                <Typography
-                                    variant="body2"
-                                    color="textSecondary"
-                                >
-                                    {user.location}
-                                </Typography>
-                            </Stack>
-                        )}
-                        {user.blog && (
-                            <Stack
-                                direction="row"
-                                alignItems="center"
-                                spacing={1}
-                            >
-                                <LinkIcon fontSize="small" color="action" />
-                                <Typography
-                                    variant="body2"
-                                    color="textSecondary"
-                                >
-                                    <Link
-                                        href={
-                                            user.blog.startsWith('http')
-                                                ? user.blog
-                                                : `https://${user.blog}`
-                                        }
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        color="inherit"
+                                    {item.icon}
+                                    <Typography
+                                        variant="body2"
+                                        color="textSecondary"
                                     >
-                                        {user.blog}
-                                    </Link>
-                                </Typography>
-                            </Stack>
-                        )}
-                    </Stack>
+                                        {item.url ? (
+                                            <Link
+                                                href={item.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                color="inherit"
+                                            >
+                                                {item.text}
+                                            </Link>
+                                        ) : (
+                                            item.text
+                                        )}
+                                    </Typography>
+                                </Stack>
+                            ))}
+                        </Stack>
+                    )}
 
-                    <StyledStatsStack
-                        direction="row"
-                        justifyContent="space-around"
-                    >
-                        <Box textAlign="center">
-                            <Typography variant="caption" color="textSecondary">
-                                Repos
-                            </Typography>
-                            <Typography variant="h6" fontWeight="bold">
-                                {user.public_repos}
-                            </Typography>
-                        </Box>
-                        <Box textAlign="center">
-                            <Typography variant="caption" color="textSecondary">
-                                Followers
-                            </Typography>
-                            <Typography variant="h6" fontWeight="bold">
-                                {user.followers}
-                            </Typography>
-                        </Box>
-                        <Box textAlign="center">
-                            <Typography variant="caption" color="textSecondary">
-                                Following
-                            </Typography>
-                            <Typography variant="h6" fontWeight="bold">
-                                {user.following}
-                            </Typography>
-                        </Box>
-                    </StyledStatsStack>
-
-                    <Box mt={3}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            href={user.html_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            fullWidth
+                    {stats.length > 0 && (
+                        <StyledStatsStack
+                            direction="row"
+                            justifyContent="space-around"
                         >
-                            Visit profile on GitHub
-                        </Button>
-                    </Box>
+                            {stats.map((stat, index) => (
+                                <Box key={index} textAlign="center">
+                                    <Typography
+                                        variant="caption"
+                                        color="textSecondary"
+                                    >
+                                        {stat.label}
+                                    </Typography>
+                                    <Typography variant="h6" fontWeight="bold">
+                                        {stat.value}
+                                    </Typography>
+                                </Box>
+                            ))}
+                        </StyledStatsStack>
+                    )}
+
+                    {actionLabel && actionUrl && (
+                        <Box mt={3}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                href={actionUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                fullWidth
+                            >
+                                {actionLabel}
+                            </Button>
+                        </Box>
+                    )}
                 </Box>
             </Stack>
         </CardContent>

@@ -1,1 +1,1 @@
-export { useDebounce } from './debounse.hooks';
+export { useDebounce } from './debounce.hooks';
