@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 
+import { TypographyProps } from '@mui/material';
+
 export type InfoItem = {
     icon: ReactNode;
     text: string;
@@ -22,3 +24,7 @@ export type ProfileCardProps = {
     actionLabel?: string;
     actionUrl?: string;
 };
+
+export interface ClampedTypographyProps extends TypographyProps {
+    lines?: number;
+}

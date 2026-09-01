@@ -2,14 +2,12 @@ import { useEffect, useState } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import EmailIcon from '@mui/icons-material/Email';
-import LinkIcon from '@mui/icons-material/Link';
-import LocationIcon from '@mui/icons-material/LocationOn';
 import { Box, CircularProgress, Stack, Typography } from '@mui/material';
 
-import { ProfileCard, SearchBar } from '@components';
+import { ErrorBoundary, ProfileCard, SearchBar } from '@components';
 import { useDebounce } from '@hooks';
 import { useGetGithubUserQuery, useSearchGithubUsersQuery } from '@services';
+import { mapGithubProfile } from '@utils';
 
 import { StyledErrorAlert, StyledOptionAvatar } from './GithubProfile.styles';
 
@@ -44,6 +42,7 @@ export const GithubProfileContainer = () => {
     };
 
     const isSearchDisabled = isProfileLoading || !value.trim();
+    const ProfleCardProps = mapGithubProfile(profileData);
 
     useEffect(() => {
         setValue(SearchQuery);
@@ -57,106 +56,57 @@ export const GithubProfileContainer = () => {
 
     return (
         <Stack alignItems="center" width="100%">
-            <SearchBar
-                key={SearchQuery}
-                onSearch={handleSearchSubmit}
-                isLoading={isProfileLoading}
-                initialValue={value}
-                suggestions={searchResults?.items || []}
-                isSearching={isSearching}
-                isSubmitDisabled={isSearchDisabled}
-                onInputChange={setValue}
-                getOptionLabel={(user) =>
-                    typeof user === 'string' ? user : user.login
-                }
-                getOptionKey={(user) => user.login}
-                label="GitHub Username"
-                placeholder="Enter GitHub username..."
-                renderOptionContent={(user) => (
-                    <>
-                        <StyledOptionAvatar
-                            src={user.avatar_url}
-                            alt={user.login}
-                        />
-                        <Typography variant="body1">{user.login}</Typography>
-                    </>
-                )}
-            />
-
-            {isProfileLoading && (
-                <Box mt={4}>
-                    <CircularProgress aria-label="Loading…" />
-                </Box>
-            )}
-
-            {error && !isProfileLoading && (
-                <StyledErrorAlert severity="error">
-                    {errorMessage}
-                </StyledErrorAlert>
-            )}
-
-            {SearchQuery && profileData && !isProfileLoading && !error && (
-                <ProfileCard
-                    imageUrl={profileData.avatar_url}
-                    imageAlt={profileData.login}
-                    title={profileData.name ?? profileData.login}
-                    subtitle={`@${profileData.login}`}
-                    description={profileData.bio}
-                    actionLabel="Visit profile on GitHub"
-                    actionUrl={profileData.html_url}
-                    stats={[
-                        { label: 'Repos', value: profileData.public_repos },
-                        { label: 'Followers', value: profileData.followers },
-                        { label: 'Following', value: profileData.following },
-                    ]}
-                    infoItems={[
-                        ...(profileData.email
-                            ? [
-                                  {
-                                      icon: (
-                                          <EmailIcon
-                                              fontSize="small"
-                                              color="action"
-                                          />
-                                      ),
-                                      text: profileData.email,
-                                  },
-                              ]
-                            : []),
-                        ...(profileData.location
-                            ? [
-                                  {
-                                      icon: (
-                                          <LocationIcon
-                                              fontSize="small"
-                                              color="action"
-                                          />
-                                      ),
-                                      text: profileData.location,
-                                  },
-                              ]
-                            : []),
-                        ...(profileData.blog
-                            ? [
-                                  {
-                                      icon: (
-                                          <LinkIcon
-                                              fontSize="small"
-                                              color="action"
-                                          />
-                                      ),
-                                      text: profileData.blog,
-                                      url: /^https?:\/\//i.test(
-                                          profileData.blog,
-                                      )
-                                          ? profileData.blog
-                                          : `https://${profileData.blog}`,
-                                  },
-                              ]
-                            : []),
-                    ]}
+            <ErrorBoundary>
+                <SearchBar
+                    key={SearchQuery}
+                    onSearch={handleSearchSubmit}
+                    isLoading={isProfileLoading}
+                    initialValue={value}
+                    suggestions={searchResults?.items || []}
+                    isSearching={isSearching}
+                    isSubmitDisabled={isSearchDisabled}
+                    onInputChange={setValue}
+                    getOptionLabel={(user) =>
+                        typeof user === 'string' ? user : user.login
+                    }
+                    getOptionKey={(user) => user.login}
+                    label="GitHub Username"
+                    placeholder="Enter GitHub username..."
+                    renderOptionContent={(user) => (
+                        <>
+                            <StyledOptionAvatar
+                                src={user.avatar_url}
+                                alt={user.login}
+                            />
+                            <Typography variant="body1">
+                                {user.login}
+                            </Typography>
+                        </>
+                    )}
                 />
-            )}
+            </ErrorBoundary>
+
+            <ErrorBoundary>
+                {isProfileLoading && (
+                    <Box marginTop={4}>
+                        <CircularProgress aria-label="Loading…" />
+                    </Box>
+                )}
+
+                {error && !isProfileLoading && (
+                    <StyledErrorAlert severity="error">
+                        {errorMessage}
+                    </StyledErrorAlert>
+                )}
+
+                {SearchQuery &&
+                    profileData &&
+                    !isProfileLoading &&
+                    !error &&
+                    ProfleCardProps && (
+                        <ProfileCard {...ProfleCardProps.card} />
+                    )}
+            </ErrorBoundary>
         </Stack>
     );
 };

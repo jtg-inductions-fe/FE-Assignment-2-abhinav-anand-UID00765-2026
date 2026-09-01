@@ -1,13 +1,7 @@
-import {
-    Box,
-    Button,
-    CardContent,
-    Link,
-    Stack,
-    Typography,
-} from '@mui/material';
+import { Box, Button, CardContent, Link, Stack } from '@mui/material';
 
 import {
+    ClampedTypography,
     StyledAvatar,
     StyledCard,
     StyledStatsStack,
@@ -37,13 +31,13 @@ export const ProfileCard = ({
                         alignItems="flex-start"
                         textAlign="left"
                     >
-                        <Typography variant="h5" fontWeight="bold">
+                        <ClampedTypography variant="h5" fontWeight="bold">
                             {title}
-                        </Typography>
+                        </ClampedTypography>
                         {subtitle && (
-                            <Typography variant="body1" color="primary">
+                            <ClampedTypography variant="body1" color="primary">
                                 {subtitle}
-                            </Typography>
+                            </ClampedTypography>
                         )}
                     </Stack>
                 </Stack>
@@ -51,17 +45,18 @@ export const ProfileCard = ({
                 {/* Body Section */}
                 <Box>
                     {description && (
-                        <Typography
+                        <ClampedTypography
                             variant="body1"
                             color="textSecondary"
-                            mt={1}
+                            marginTop={1}
+                            lines={3}
                         >
                             {description}
-                        </Typography>
+                        </ClampedTypography>
                     )}
 
                     {infoItems.length > 0 && (
-                        <Stack direction="column" spacing={0.5} mt={2}>
+                        <Stack direction="column" spacing={0.5} marginTop={2}>
                             {infoItems.map((item, index) => (
                                 <Stack
                                     key={index}
@@ -70,7 +65,7 @@ export const ProfileCard = ({
                                     spacing={1}
                                 >
                                     {item.icon}
-                                    <Typography
+                                    <ClampedTypography
                                         variant="body2"
                                         color="textSecondary"
                                     >
@@ -86,35 +81,35 @@ export const ProfileCard = ({
                                         ) : (
                                             item.text
                                         )}
-                                    </Typography>
+                                    </ClampedTypography>
                                 </Stack>
                             ))}
                         </Stack>
                     )}
 
                     {stats.length > 0 && (
-                        <StyledStatsStack
-                            direction="row"
-                            justifyContent="space-around"
-                        >
+                        <StyledStatsStack direction="row" gap={2}>
                             {stats.map((stat, index) => (
-                                <Box key={index} textAlign="center">
-                                    <Typography
+                                <Box key={index} textAlign="center" flex={1}>
+                                    <ClampedTypography
                                         variant="caption"
                                         color="textSecondary"
                                     >
                                         {stat.label}
-                                    </Typography>
-                                    <Typography variant="h6" fontWeight="bold">
+                                    </ClampedTypography>
+                                    <ClampedTypography
+                                        variant="h6"
+                                        fontWeight="bold"
+                                    >
                                         {stat.value}
-                                    </Typography>
+                                    </ClampedTypography>
                                 </Box>
                             ))}
                         </StyledStatsStack>
                     )}
 
                     {actionLabel && actionUrl && (
-                        <Box mt={3}>
+                        <Box marginTop={3}>
                             <Button
                                 variant="contained"
                                 color="primary"

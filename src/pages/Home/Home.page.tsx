@@ -1,8 +1,7 @@
 import { Stack, Typography } from '@mui/material';
 
-import { GithubProfileContainer } from '@containers';
-
 import { ErrorBoundary } from '@components';
+import { GithubProfileContainer } from '@containers';
 
 export const HomePage = () => (
     <Stack spacing={4} width="100%">
