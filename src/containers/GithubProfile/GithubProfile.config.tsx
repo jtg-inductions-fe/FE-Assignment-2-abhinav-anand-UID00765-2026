@@ -8,19 +8,30 @@ export const mapGithubProfile = (profileData: GitHubUser | undefined) => {
     if (!profileData) return null;
 
     const card = {
-        imageUrl: profileData.avatar_url,
-        imageAlt: profileData.login,
+        image: {
+            url: profileData.avatar_url,
+            alt: profileData.login,
+        },
         title: profileData.name ?? profileData.login,
         subtitle: `@${profileData.login}`,
         description: profileData.bio,
-        actionLabel: 'Visit profile on GitHub',
-        actionUrl: profileData.html_url,
+    };
+
+    const action = {
+        label: 'Visit profile on GitHub',
+        url: profileData.html_url,
+    };
+
+    const stats = {
         stats: [
             { label: 'Repos', value: profileData.public_repos },
             { label: 'Followers', value: profileData.followers },
             { label: 'Following', value: profileData.following },
         ],
-        infoItems: [
+    };
+
+    const detailItems = {
+        items: [
             ...(profileData.email
                 ? [
                       {
@@ -53,5 +64,5 @@ export const mapGithubProfile = (profileData: GitHubUser | undefined) => {
         ],
     };
 
-    return { card };
+    return { card, action, stats, detailItems };
 };

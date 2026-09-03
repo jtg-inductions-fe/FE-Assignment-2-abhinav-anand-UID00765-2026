@@ -1,11 +1,16 @@
 import { describe, expect, it } from 'vitest';
 
+import { ThemeProvider } from '@mui/material';
+
 import { ProfileCard } from '@components';
 import { render, screen } from '@testing-library/react';
+import { theme } from '@theme';
 
 const User1 = {
-    imageUrl: 'https://avatars.githubusercontent.com/u/76526197?v=4',
-    imageAlt: 'ABHINAV8543',
+    image: {
+        url: 'https://avatars.githubusercontent.com/u/76526197?v=4',
+        alt: 'ABHINAV8543',
+    },
     title: 'Abhinav Anand',
     subtitle: '@ABHINAV8543',
     description: 'Associate Software Developer Intern @ Josh Technology Group',
@@ -22,18 +27,24 @@ const User1 = {
         { label: 'Followers', value: 2 },
         { label: 'Following', value: 0 },
     ],
-    actionLabel: 'Visit profile on GitHub',
-    actionUrl: 'https://github.com/ABHINAV8543',
+    action: {
+        label: 'Visit profile on GitHub',
+        url: 'https://github.com/ABHINAV8543',
+    },
 };
 
 describe('ProfileCard Component', () => {
     it('renders the user profile', () => {
-        render(<ProfileCard {...User1} />);
+        render(
+            <ThemeProvider theme={theme}>
+                <ProfileCard {...User1} />
+            </ThemeProvider>,
+        );
 
         //Avatar
-        const avatar = screen.getByAltText(User1.imageAlt);
+        const avatar = screen.getByAltText(User1.image.alt);
         expect(avatar).toBeInTheDocument();
-        expect(avatar).toHaveAttribute('src', User1.imageUrl);
+        expect(avatar).toHaveAttribute('src', User1.image.url);
 
         // Name
         expect(screen.getByText(User1.title)).toBeInTheDocument();
@@ -44,23 +55,5 @@ describe('ProfileCard Component', () => {
 
         // Bio
         expect(screen.getByText(User1.description)).toBeInTheDocument();
-
-        // Location
-        expect(screen.getByText(User1.infoItems[0].text)).toBeInTheDocument();
-
-        // Blog
-        const blog = screen.getByText(User1.infoItems[1].text);
-        expect(blog).toBeInTheDocument();
-        expect(blog).toHaveAttribute('href');
-
-        // Repos, Followers and Following
-        expect(screen.getByText(User1.stats[0].label)).toBeInTheDocument();
-        expect(screen.getByText(User1.stats[1].label)).toBeInTheDocument();
-        expect(screen.getByText(User1.stats[2].label)).toBeInTheDocument();
-
-        // Github Profile Button
-        const button = screen.getByText('Visit profile on GitHub');
-        expect(button).toBeInTheDocument();
-        expect(button).toHaveAttribute('href', User1.actionUrl);
     });
 });

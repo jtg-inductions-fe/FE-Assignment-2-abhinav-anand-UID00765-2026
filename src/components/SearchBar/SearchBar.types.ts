@@ -1,7 +1,7 @@
 export type SearchBarProps<T> = {
     onSearch: (value: string) => void;
     isLoading: boolean;
-    initialValue: string;
+    value: string;
     suggestions: T[];
     isSearching: boolean;
     isSubmitDisabled: boolean;

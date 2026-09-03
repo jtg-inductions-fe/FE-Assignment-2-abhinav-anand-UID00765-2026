@@ -4,12 +4,20 @@ import { useSearchParams } from 'react-router-dom';
 
 import { Box, CircularProgress, Stack, Typography } from '@mui/material';
 
-import { ErrorBoundary, ProfileCard, SearchBar } from '@components';
+import {
+    ActionButtons,
+    Avatar,
+    DetailItems,
+    ErrorBoundary,
+    ProfileCard,
+    SearchBar,
+    Stats,
+} from '@components';
 import { useDebounce } from '@hooks';
 import { useGetGithubUserQuery, useSearchGithubUsersQuery } from '@services';
-import { mapGithubProfile } from '@utils';
 
-import { StyledErrorAlert, StyledOptionAvatar } from './GithubProfile.styles';
+import { mapGithubProfile } from './GithubProfile.config';
+import { StyledErrorAlert } from './GithubProfile.styles';
 
 export const GithubProfileContainer = () => {
     // URL routing state
@@ -61,7 +69,7 @@ export const GithubProfileContainer = () => {
                     key={SearchQuery}
                     onSearch={handleSearchSubmit}
                     isLoading={isProfileLoading}
-                    initialValue={value}
+                    value={value}
                     suggestions={searchResults?.items || []}
                     isSearching={isSearching}
                     isSubmitDisabled={isSearchDisabled}
@@ -74,11 +82,8 @@ export const GithubProfileContainer = () => {
                     placeholder="Enter GitHub username..."
                     renderOptionContent={(user) => (
                         <>
-                            <StyledOptionAvatar
-                                src={user.avatar_url}
-                                alt={user.login}
-                            />
-                            <Typography variant="body1">
+                            <Avatar src={user.avatar_url} alt={user.login} />
+                            <Typography variant="body1" marginLeft={2}>
                                 {user.login}
                             </Typography>
                         </>
@@ -104,7 +109,17 @@ export const GithubProfileContainer = () => {
                     !isProfileLoading &&
                     !error &&
                     ProfleCardProps && (
-                        <ProfileCard {...ProfleCardProps.card} />
+                        <ProfileCard {...ProfleCardProps.card}>
+                            {ProfleCardProps.detailItems && (
+                                <DetailItems {...ProfleCardProps.detailItems} />
+                            )}
+                            {ProfleCardProps.stats && (
+                                <Stats {...ProfleCardProps.stats} />
+                            )}
+                            {ProfleCardProps.action && (
+                                <ActionButtons {...ProfleCardProps.action} />
+                            )}
+                        </ProfileCard>
                     )}
             </ErrorBoundary>
         </Stack>

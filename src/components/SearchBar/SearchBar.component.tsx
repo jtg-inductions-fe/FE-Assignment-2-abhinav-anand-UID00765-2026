@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Autocomplete, Box, Stack, TextField } from '@mui/material';
+import { Autocomplete, Box, Stack, TextField, Typography } from '@mui/material';
 
 import { StyledSubmitButton } from './SearchBar.styles';
 import type { SearchBarProps } from './SearchBar.types';
@@ -8,7 +8,7 @@ import type { SearchBarProps } from './SearchBar.types';
 export const SearchBar = <T,>({
     onSearch,
     isLoading,
-    initialValue,
+    value,
     suggestions,
     isSearching,
     isSubmitDisabled,
@@ -21,8 +21,8 @@ export const SearchBar = <T,>({
 }: SearchBarProps<T>) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (initialValue.trim() && !isSubmitDisabled) {
-            onSearch(initialValue.trim());
+        if (value.trim() && !isSubmitDisabled) {
+            onSearch(value.trim());
         }
     };
 
@@ -40,7 +40,7 @@ export const SearchBar = <T,>({
                     freeSolo
                     options={suggestions}
                     loading={isSearching}
-                    inputValue={initialValue}
+                    inputValue={value}
                     getOptionLabel={getOptionLabel}
                     renderOption={(props, option) => {
                         const key = getOptionKey
@@ -84,7 +84,9 @@ export const SearchBar = <T,>({
                 color="primary"
                 disabled={isSubmitDisabled}
             >
-                {isLoading ? 'Searching...' : 'Search'}
+                <Typography variant="button" lines={1}>
+                    {isLoading ? 'Searching...' : 'Search'}
+                </Typography>
             </StyledSubmitButton>
         </Stack>
     );

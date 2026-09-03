@@ -3,3 +3,9 @@ export declare module '@mui/material/styles/createMixins' {
         lineClamp: (lines: number) => CSSProperties;
     }
 }
+
+export declare module '@mui/material/Typography' {
+    interface TypographyOwnProps {
+        lines?: number;
+    }
+}

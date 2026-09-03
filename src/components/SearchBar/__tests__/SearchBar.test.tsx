@@ -1,15 +1,18 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { ThemeProvider } from '@mui/material';
+
 import { SearchBar } from '@components';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { theme } from '@theme';
 
 describe('SearchBar Component', () => {
     // If the Searchbar and Button renders
     it('renders the input field and search button', () => {
         render(
             <SearchBar
-                initialValue={''}
+                value={''}
                 suggestions={[]}
                 onSearch={vi.fn()}
                 onInputChange={vi.fn()}
@@ -56,21 +59,25 @@ describe('SearchBar Component', () => {
         const user = userEvent.setup();
 
         render(
-            <SearchBar
-                initialValue="ABHINAV854"
-                suggestions={mockSuggestions}
-                onSearch={mockOnSearch}
-                onInputChange={vi.fn()}
-                isLoading={false}
-                isSearching={false}
-                isSubmitDisabled={false}
-                placeholder="Enter GitHub username..."
-                getOptionLabel={(option) =>
-                    typeof option === 'string' ? option : option.login
-                }
-                getOptionKey={(option) => option.login}
-                renderOptionContent={(option) => <span>{option.login}</span>}
-            />,
+            <ThemeProvider theme={theme}>
+                <SearchBar
+                    value="ABHINAV854"
+                    suggestions={mockSuggestions}
+                    onSearch={mockOnSearch}
+                    onInputChange={vi.fn()}
+                    isLoading={false}
+                    isSearching={false}
+                    isSubmitDisabled={false}
+                    placeholder="Enter GitHub username..."
+                    getOptionLabel={(option) =>
+                        typeof option === 'string' ? option : option.login
+                    }
+                    getOptionKey={(option) => option.login}
+                    renderOptionContent={(option) => (
+                        <span>{option.login}</span>
+                    )}
+                />
+            </ThemeProvider>,
         );
 
         // In MUI the Autocomplete input has the aria role of "combobox"

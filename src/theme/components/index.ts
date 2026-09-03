@@ -1,4 +1,4 @@
-import type { Components } from '@mui/material/styles';
+import type { Components, Theme } from '@mui/material/styles';
 
 // Local Font files
 import Inter400WOFF2 from '@assets/fonts/inter/inter-400.woff2';
@@ -41,7 +41,7 @@ const fontFaceDeclarations = `
     }
 `;
 
-export const components: Components = {
+export const components: Components<Theme> = {
     MuiCssBaseline: {
         styleOverrides: `
             html {
@@ -49,5 +49,20 @@ export const components: Components = {
             }
             ${fontFaceDeclarations}
         `,
+    },
+    MuiTypography: {
+        styleOverrides: {
+            root: ({ ownerState, theme }) => {
+                const lines = (ownerState as { lines?: number }).lines;
+                const { mixins } = theme;
+
+                if (lines) {
+                    return {
+                        ...mixins.lineClamp(lines),
+                    };
+                }
+                return {};
+            },
+        },
     },
 };
