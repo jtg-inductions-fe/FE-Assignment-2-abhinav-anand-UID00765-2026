@@ -5,14 +5,18 @@
             "@assets/*": ["assets/*"],
             "@theme": ["theme/index"],
             "@services": ["services/index"],
+            "@services/*": ["services/*"],
             "@store": ["store/index"],
             "@pages": ["pages/index"],
+            "@hooks": ["hooks/index"],
             "@layouts": ["layouts/index"],
             "@routes": ["routes/index"],
             "@components": ["components/index"],
+            "@components/*": ["components/*"],
             "@containers": ["containers/index"],
+            "@containers/*": ["containers/*"],
             "@constants": ["constants/index"],
-            "@services/*": ["services/*"]
+            "@utils": ["utils/index"]
         }
     }
 }

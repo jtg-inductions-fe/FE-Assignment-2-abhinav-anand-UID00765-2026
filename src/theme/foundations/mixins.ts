@@ -14,6 +14,7 @@ const lineClamp = (lines: number = 1): CSSProperties => ({
     textOverflow: 'ellipsis',
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: lines,
+    wordBreak: 'break-all',
 });
 
 export const mixins: MixinsOptions = {
