@@ -1,7 +1,8 @@
 export type DetailItemsProps = {
     items: {
         icon: React.ReactNode;
-        text: string;
+        label?: string;
+        value: string | number;
         url?: string;
     }[];
 };

@@ -6,4 +6,3 @@ export { Avatar } from './Avatar';
 export { ActionButtons } from './ActionButtons';
 export { Stats } from './Stats';
 export { DetailItems } from './DetailItems';
-export { MetricsPanel } from './MetricsPanel';

@@ -65,4 +65,12 @@ export const components: Components<Theme> = {
             },
         },
     },
+    MuiCard: {
+        styleOverrides: {
+            root: ({ theme }) => ({
+                borderRadius: '1.2rem',
+                boxShadow: `0.4rem 0.4rem 1rem ${theme.palette.text.secondary}50`,
+            }),
+        },
+    },
 };

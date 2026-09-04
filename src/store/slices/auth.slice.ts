@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { githubApi, GitHubUser } from '@services';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { GitHubUser } from '@services';
 
 const storedUser = localStorage.getItem('github_user');
 const storedToken = localStorage.getItem('github_token');
@@ -19,17 +19,15 @@ const authSlice = createSlice({
             localStorage.removeItem('github_user');
             localStorage.removeItem('github_token');
         },
-    },
-    extraReducers: (builder) => {
-        builder.addMatcher(
-            githubApi.endpoints.loginUser.matchFulfilled,
-            (state, action) => {
-                state.user = action.payload;
-                state.token = action.meta.arg.originalArgs;
-            },
-        );
+        setCredentials: (
+            state,
+            action: PayloadAction<{ user: GitHubUser; token: string }>,
+        ) => {
+            state.user = action.payload.user;
+            state.token = action.payload.token;
+        },
     },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setCredentials } = authSlice.actions;
 export default authSlice.reducer;

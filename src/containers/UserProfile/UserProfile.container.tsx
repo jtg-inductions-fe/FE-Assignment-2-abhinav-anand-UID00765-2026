@@ -6,7 +6,6 @@ import {
     ActionButtons,
     DetailItems,
     ErrorBoundary,
-    MetricsPanel,
     ProfileCard,
     Stats,
 } from '@components';
@@ -35,9 +34,6 @@ export const UserProfile = () => {
                             )}
                             {ProfleCardProps.action && (
                                 <ActionButtons {...ProfleCardProps.action} />
-                            )}
-                            {ProfleCardProps.metrics && (
-                                <MetricsPanel {...ProfleCardProps.metrics} />
                             )}
                         </ProfileCard>
                     )}

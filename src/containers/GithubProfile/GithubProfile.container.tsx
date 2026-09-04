@@ -9,7 +9,6 @@ import {
     Avatar,
     DetailItems,
     ErrorBoundary,
-    MetricsPanel,
     ProfileCard,
     SearchBar,
     Stats,
@@ -119,9 +118,6 @@ export const GithubProfileContainer = () => {
                             )}
                             {ProfleCardProps.action && (
                                 <ActionButtons {...ProfleCardProps.action} />
-                            )}
-                            {ProfleCardProps.metrics && (
-                                <MetricsPanel {...ProfleCardProps.metrics} />
                             )}
                         </ProfileCard>
                     )}

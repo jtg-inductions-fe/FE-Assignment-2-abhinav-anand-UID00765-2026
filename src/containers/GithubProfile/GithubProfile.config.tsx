@@ -39,7 +39,8 @@ export const mapGithubProfile = (profileData: GitHubUser | undefined) => {
                 ? [
                       {
                           icon: <EmailIcon fontSize="small" color="action" />,
-                          text: profileData.email,
+                          label: 'Email',
+                          value: profileData.email,
                       },
                   ]
                 : []),
@@ -49,7 +50,8 @@ export const mapGithubProfile = (profileData: GitHubUser | undefined) => {
                           icon: (
                               <LocationIcon fontSize="small" color="action" />
                           ),
-                          text: profileData.location,
+                          label: 'Loaction',
+                          value: profileData.location,
                       },
                   ]
                 : []),
@@ -57,20 +59,16 @@ export const mapGithubProfile = (profileData: GitHubUser | undefined) => {
                 ? [
                       {
                           icon: <LinkIcon fontSize="small" color="action" />,
-                          text: profileData.blog,
+                          label: 'Blog',
+                          value: profileData.blog,
                           url: /^https?:\/\//i.test(profileData.blog)
                               ? profileData.blog
                               : `https://${profileData.blog}`,
                       },
                   ]
                 : []),
-        ],
-    };
-
-    const metrics =
-        profileData.total_private_repos !== undefined
-            ? {
-                  metrics: [
+            ...(profileData.total_private_repos
+                ? [
                       {
                           icon: (
                               <FolderSpecialIcon
@@ -81,57 +79,33 @@ export const mapGithubProfile = (profileData: GitHubUser | undefined) => {
                           label: 'Private Repos',
                           value: profileData.total_private_repos,
                       },
-                      ...(profileData.collaborators !== undefined
-                          ? [
-                                {
-                                    icon: (
-                                        <GroupIcon
-                                            color="primary"
-                                            fontSize="small"
-                                        />
-                                    ),
-                                    label: 'Collabs',
-                                    value: profileData.collaborators,
-                                },
-                            ]
-                          : []),
-                      ...(profileData.plan?.name
-                          ? [
-                                {
-                                    icon: (
-                                        <WorkspacePremiumIcon
-                                            color="warning"
-                                            fontSize="small"
-                                        />
-                                    ),
-                                    label: 'Plan',
-                                    value: profileData.plan.name.toUpperCase(),
-                                },
-                            ]
-                          : []),
-                  ],
-                  progress:
-                      profileData.plan?.space &&
-                      profileData.disk_usage !== undefined
-                          ? {
-                                label: 'Storage Capacity',
-                                text: `${(profileData.disk_usage / 1024).toFixed(1)} MB / ${(profileData.plan.space / 1024).toFixed(1)} MB`,
-                                percent: Math.min(
-                                    (profileData.disk_usage /
-                                        profileData.plan.space) *
-                                        100,
-                                    100,
-                                ),
-                                color:
-                                    profileData.disk_usage /
-                                        profileData.plan.space >
-                                    0.8
-                                        ? ('error' as const)
-                                        : ('primary' as const),
-                            }
-                          : undefined,
-              }
-            : null;
+                  ]
+                : []),
+            ...(profileData.collaborators !== undefined
+                ? [
+                      {
+                          icon: <GroupIcon color="primary" fontSize="small" />,
+                          label: 'Collabs',
+                          value: profileData.collaborators,
+                      },
+                  ]
+                : []),
+            ...(profileData.plan?.name
+                ? [
+                      {
+                          icon: (
+                              <WorkspacePremiumIcon
+                                  color="warning"
+                                  fontSize="small"
+                              />
+                          ),
+                          label: 'Plan',
+                          value: profileData.plan.name.toUpperCase(),
+                      },
+                  ]
+                : []),
+        ],
+    };
 
-    return { card, action, stats, detailItems, metrics };
+    return { card, action, stats, detailItems };
 };
