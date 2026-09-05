@@ -10,3 +10,10 @@ export type {
     GithubUserList,
     GitHubUserListItem,
 } from './github.types';
+
+export {
+    followApi,
+    useCheckIfFollowingQuery,
+    useFollowUserMutation,
+    useUnfollowUserMutation,
+} from './follow.service';
