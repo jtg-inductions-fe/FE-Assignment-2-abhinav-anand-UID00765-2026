@@ -3,7 +3,7 @@ import { baseApi } from '@services/base';
 
 import type { GitHubUser, GithubUserList } from './github.types';
 
-const { ENDPOINTS } = API;
+const { ENDPOINTS, HEADERS } = API;
 
 export const githubApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -20,13 +20,9 @@ export const githubApi = baseApi.injectEndpoints({
         }),
         loginUser: builder.mutation<GitHubUser, string>({
             query: (token) => ({
-                url: 'user',
+                url: ENDPOINTS.LOGIN,
                 method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    Accept: 'application/vnd.github.v3+json',
-                    'X-GitHub-Api-Version': '2026-03-10',
-                },
+                headers: HEADERS(token),
             }),
         }),
     }),

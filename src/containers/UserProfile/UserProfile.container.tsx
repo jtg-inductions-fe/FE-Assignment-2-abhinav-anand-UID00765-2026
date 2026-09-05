@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-
 import { Box, Container } from '@mui/material';
 
 import {
@@ -10,10 +8,10 @@ import {
     Stats,
 } from '@components';
 import { mapGithubProfile } from '@containers/GithubProfile';
-import { RootState } from '@store';
+import { useAuth } from '@hooks';
 
 export const UserProfile = () => {
-    const user = useSelector((state: RootState) => state.auth.user);
+    const { user } = useAuth();
     if (!user) {
         return null;
     }
@@ -21,9 +19,9 @@ export const UserProfile = () => {
     const ProfleCardProps = mapGithubProfile(user);
 
     return (
-        <Container maxWidth="md">
-            <ErrorBoundary>
-                <Box mt={4} mb={4} width="100%">
+        <ErrorBoundary>
+            <Container maxWidth="md">
+                <Box marginY={4} width="100%">
                     {ProfleCardProps && (
                         <ProfileCard {...ProfleCardProps.card}>
                             {ProfleCardProps.detailItems && (
@@ -38,7 +36,7 @@ export const UserProfile = () => {
                         </ProfileCard>
                     )}
                 </Box>
-            </ErrorBoundary>
-        </Container>
+            </Container>
+        </ErrorBoundary>
     );
 };

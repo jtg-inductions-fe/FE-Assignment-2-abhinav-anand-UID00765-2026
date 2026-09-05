@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
+import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { Key, Person, Visibility, VisibilityOff } from '@mui/icons-material';
 import {
@@ -18,10 +19,13 @@ import {
 } from '@mui/material';
 
 import { ErrorBoundary } from '@components';
+import { COMMON, PATHS } from '@constants';
+import { useAuth } from '@hooks';
 import { useLoginUserMutation } from '@services';
 import { setCredentials } from '@store';
 
 export const LoginContainer = () => {
+    const { COOKIES } = COMMON;
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -32,6 +36,11 @@ export const LoginContainer = () => {
     const [loginUser, { isLoading, error: apiError }] = useLoginUserMutation();
 
     const [showPassword, setShowPassword] = useState(false);
+
+    const { isLoggedIn } = useAuth();
+    if (isLoggedIn) {
+        return <Navigate to={PATHS.PROFILE} replace />;
+    }
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -72,10 +81,16 @@ export const LoginContainer = () => {
             dispatch(
                 setCredentials({ user: userData, token: password.trim() }),
             );
-            localStorage.setItem('github_user', JSON.stringify(userData));
-            localStorage.setItem('github_token', password.trim());
+            Cookies.set(COOKIES.USER_KEY, JSON.stringify(userData), {
+                expires: COOKIES.EXPIRY,
+                secure: true,
+            });
+            Cookies.set(COOKIES.TOKEN_KEY, password.trim(), {
+                expires: COOKIES.EXPIRY,
+                secure: true,
+            });
 
-            await navigate('/profile');
+            await navigate(PATHS.PROFILE);
         } catch {
             setValidationError('Invalid token');
         }
@@ -87,8 +102,8 @@ export const LoginContainer = () => {
         'Login failed. Please check your credentials.';
 
     return (
-        <Container component="main" maxWidth="xs">
-            <ErrorBoundary>
+        <ErrorBoundary>
+            <Container component="main" maxWidth="xs">
                 <Card>
                     <Stack padding={4} textAlign="center" gap={1}>
                         <Stack
@@ -222,7 +237,7 @@ export const LoginContainer = () => {
                         </Box>
                     </Stack>
                 </Card>
-            </ErrorBoundary>
-        </Container>
+            </Container>
+        </ErrorBoundary>
     );
 };

@@ -1,12 +1,15 @@
+import Cookies from 'js-cookie';
+
+import { COMMON } from '@constants';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { GitHubUser } from '@services';
+import { getUser } from '@utils';
 
-const storedUser = localStorage.getItem('github_user');
-const storedToken = localStorage.getItem('github_token');
+const { COOKIES } = COMMON;
 
 const initialState = {
-    user: storedUser ? (JSON.parse(storedUser) as GitHubUser) : null,
-    token: storedToken || null,
+    user: getUser() || null,
+    token: Cookies.get(COOKIES.TOKEN_KEY) || null,
 };
 
 const authSlice = createSlice({
@@ -16,8 +19,8 @@ const authSlice = createSlice({
         logout: (state) => {
             state.user = null;
             state.token = null;
-            localStorage.removeItem('github_user');
-            localStorage.removeItem('github_token');
+            Cookies.remove(COOKIES.USER_KEY);
+            Cookies.remove(COOKIES.TOKEN_KEY);
         },
         setCredentials: (
             state,
@@ -30,4 +33,4 @@ const authSlice = createSlice({
 });
 
 export const { logout, setCredentials } = authSlice.actions;
-export default authSlice.reducer;
+export const authReducer = authSlice.reducer;
