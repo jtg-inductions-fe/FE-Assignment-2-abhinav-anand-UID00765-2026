@@ -63,8 +63,8 @@ export const GithubProfileContainer = () => {
     }
 
     return (
-        <Stack alignItems="center" width="100%">
-            <ErrorBoundary>
+        <ErrorBoundary>
+            <Stack alignItems="center" width="100%">
                 <SearchBar
                     key={SearchQuery}
                     onSearch={handleSearchSubmit}
@@ -89,9 +89,7 @@ export const GithubProfileContainer = () => {
                         </>
                     )}
                 />
-            </ErrorBoundary>
 
-            <ErrorBoundary>
                 {isProfileLoading && (
                     <Box marginTop={4}>
                         <CircularProgress aria-label="Loading…" />
@@ -121,7 +119,7 @@ export const GithubProfileContainer = () => {
                             )}
                         </ProfileCard>
                     )}
-            </ErrorBoundary>
-        </Stack>
+            </Stack>
+        </ErrorBoundary>
     );
 };

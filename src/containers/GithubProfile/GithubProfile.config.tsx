@@ -1,6 +1,9 @@
 import EmailIcon from '@mui/icons-material/Email';
+import FolderSpecialIcon from '@mui/icons-material/FolderSpecial';
+import GroupIcon from '@mui/icons-material/Group';
 import LinkIcon from '@mui/icons-material/Link';
 import LocationIcon from '@mui/icons-material/LocationOn';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 import type { GitHubUser } from '@services';
 
@@ -36,7 +39,8 @@ export const mapGithubProfile = (profileData: GitHubUser | undefined) => {
                 ? [
                       {
                           icon: <EmailIcon fontSize="small" color="action" />,
-                          text: profileData.email,
+                          label: 'Email',
+                          value: profileData.email,
                       },
                   ]
                 : []),
@@ -46,7 +50,8 @@ export const mapGithubProfile = (profileData: GitHubUser | undefined) => {
                           icon: (
                               <LocationIcon fontSize="small" color="action" />
                           ),
-                          text: profileData.location,
+                          label: 'Loaction',
+                          value: profileData.location,
                       },
                   ]
                 : []),
@@ -54,10 +59,48 @@ export const mapGithubProfile = (profileData: GitHubUser | undefined) => {
                 ? [
                       {
                           icon: <LinkIcon fontSize="small" color="action" />,
-                          text: profileData.blog,
+                          label: 'Blog',
+                          value: profileData.blog,
                           url: /^https?:\/\//i.test(profileData.blog)
                               ? profileData.blog
                               : `https://${profileData.blog}`,
+                      },
+                  ]
+                : []),
+            ...(profileData.total_private_repos
+                ? [
+                      {
+                          icon: (
+                              <FolderSpecialIcon
+                                  color="primary"
+                                  fontSize="small"
+                              />
+                          ),
+                          label: 'Private Repos',
+                          value: profileData.total_private_repos,
+                      },
+                  ]
+                : []),
+            ...(profileData.collaborators !== undefined
+                ? [
+                      {
+                          icon: <GroupIcon color="primary" fontSize="small" />,
+                          label: 'Collabs',
+                          value: profileData.collaborators,
+                      },
+                  ]
+                : []),
+            ...(profileData.plan?.name
+                ? [
+                      {
+                          icon: (
+                              <WorkspacePremiumIcon
+                                  color="warning"
+                                  fontSize="small"
+                              />
+                          ),
+                          label: 'Plan',
+                          value: profileData.plan.name.toUpperCase(),
                       },
                   ]
                 : []),

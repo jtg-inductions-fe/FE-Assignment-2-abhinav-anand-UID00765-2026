@@ -3,6 +3,7 @@ import { useNavigate, useRouteError } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 import { Error } from '@components';
+import { PATHS } from '@constants';
 
 export const ErrorPage = () => {
     const error = useRouteError();
@@ -37,7 +38,7 @@ export const ErrorPage = () => {
                 message={errorMessage}
                 titleColor="textSecondary"
                 buttonText="Go Back Home"
-                onButtonClick={() => void navigate('/')}
+                onButtonClick={() => void navigate(PATHS.HOME)}
             />
         </Box>
     );

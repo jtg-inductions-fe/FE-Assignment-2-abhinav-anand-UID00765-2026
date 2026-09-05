@@ -3,5 +3,11 @@ export const API = {
     ENDPOINTS: {
         GET_USER: (username: string) => `users/${encodeURIComponent(username)}`,
         SEARCH_USER: 'search/users',
+        LOGIN: 'user',
     },
+    HEADERS: (token: string) => ({
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github.v3+json',
+        'X-GitHub-Api-Version': '2026-03-10',
+    }),
 };
