@@ -60,7 +60,7 @@ export const GithubProfileContainer = () => {
         currentUser && profileData && currentUser.login !== profileData.login,
     );
 
-    const { data: isFollowingUser, isLoading: isCheckLoading } =
+    const { data: isFollowingUser, isFetching: isCheckLoading } =
         useCheckIfFollowingQuery(profileData?.login ?? '', {
             skip: !isOtherUser || !profileData,
         });
