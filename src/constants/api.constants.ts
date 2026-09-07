@@ -4,6 +4,7 @@ export const API = {
         GET_USER: (username: string) => `users/${encodeURIComponent(username)}`,
         SEARCH_USER: 'search/users',
         LOGIN: 'user',
+        FOLLOW: (username: string) => `user/following/${username}`,
     },
     HEADERS: (token: string) => ({
         Authorization: `Bearer ${token}`,

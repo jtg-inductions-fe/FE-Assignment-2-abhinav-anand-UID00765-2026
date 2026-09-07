@@ -21,8 +21,12 @@ export const mapGithubProfile = (profileData: GitHubUser | undefined) => {
     };
 
     const action = {
-        label: 'Visit profile on GitHub',
-        url: profileData.html_url,
+        actions: [
+            {
+                label: 'Visit profile on GitHub',
+                url: profileData.html_url,
+            },
+        ],
     };
 
     const stats = {
