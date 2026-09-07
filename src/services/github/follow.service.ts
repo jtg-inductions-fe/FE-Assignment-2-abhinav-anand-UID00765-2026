@@ -9,6 +9,23 @@ const enhancedApi = githubApi.enhanceEndpoints({
     addTagTypes: ['Follow'],
 });
 
+const generateFollowPatches = (username: string, isFollowing: boolean) => ({
+    userPatch: githubApi.util.updateQueryData(
+        'getGithubUser',
+        username,
+        (draft) => {
+            if (draft.followers !== undefined) {
+                draft.followers += isFollowing ? 1 : -1;
+            }
+        },
+    ),
+    statusPatch: followApi.util.updateQueryData(
+        'checkIfFollowing',
+        username,
+        () => isFollowing,
+    ),
+});
+
 export const followApi = enhancedApi.injectEndpoints({
     endpoints: (builder) => ({
         checkIfFollowing: builder.query<boolean, string>({
@@ -37,30 +54,15 @@ export const followApi = enhancedApi.injectEndpoints({
                 method: 'PUT',
             }),
             async onQueryStarted(username, { dispatch, queryFulfilled }) {
-                const userPatch = dispatch(
-                    githubApi.util.updateQueryData(
-                        'getGithubUser',
-                        username,
-                        (draft) => {
-                            if (draft.followers !== undefined)
-                                draft.followers += 1;
-                        },
-                    ),
-                );
-
-                const statusPatch = dispatch(
-                    followApi.util.updateQueryData(
-                        'checkIfFollowing',
-                        username,
-                        () => true,
-                    ),
-                );
+                const patches = generateFollowPatches(username, true);
+                const dispatchedUser = dispatch(patches.userPatch);
+                const dispatchedStatus = dispatch(patches.statusPatch);
 
                 try {
                     await queryFulfilled;
                 } catch {
-                    userPatch.undo();
-                    statusPatch.undo();
+                    dispatchedUser.undo();
+                    dispatchedStatus.undo();
                 }
             },
         }),
@@ -71,30 +73,15 @@ export const followApi = enhancedApi.injectEndpoints({
                 method: 'DELETE',
             }),
             async onQueryStarted(username, { dispatch, queryFulfilled }) {
-                const userPatch = dispatch(
-                    githubApi.util.updateQueryData(
-                        'getGithubUser',
-                        username,
-                        (draft) => {
-                            if (draft.followers !== undefined)
-                                draft.followers -= 1;
-                        },
-                    ),
-                );
-
-                const statusPatch = dispatch(
-                    followApi.util.updateQueryData(
-                        'checkIfFollowing',
-                        username,
-                        () => false,
-                    ),
-                );
+                const patches = generateFollowPatches(username, false);
+                const dispatchedUser = dispatch(patches.userPatch);
+                const dispatchedStatus = dispatch(patches.statusPatch);
 
                 try {
                     await queryFulfilled;
                 } catch {
-                    userPatch.undo();
-                    statusPatch.undo();
+                    dispatchedUser.undo();
+                    dispatchedStatus.undo();
                 }
             },
         }),
